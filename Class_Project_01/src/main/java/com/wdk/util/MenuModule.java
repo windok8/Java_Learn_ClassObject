@@ -1,4 +1,4 @@
-package com.wdk.controller;
+package com.wdk.util;
 
 /**
  * @author : Windok
@@ -45,9 +45,8 @@ public class MenuModule {
      * @Author: Windok
      * @Description: 主菜单
      **/
-    public void main_Menu() {
+    public void login_Menu() {
         draw_Line(2);
-        //  输出主菜单
         System.out.println("\t\t\t\t【美食之家】");
         System.out.println("\t\t\t\t【1】登录");
         System.out.println("\t\t\t\t【2】注册");
@@ -55,6 +54,18 @@ public class MenuModule {
         draw_Line(2);
     }
 
+    /**
+     * @Author: Windok
+     * @Description: 注册账号菜单
+     **/
+    public void register_Menu(){
+        draw_Line(2);
+        System.out.println("\t\t\t\t【注册账号】");
+        System.out.println("\t\t\t\t【1】注册普通用户");
+        System.out.println("\t\t\t\t【2】注册成为作者");
+        System.out.println("\t\t\t\t【0】返回上一级");
+        draw_Line(2);
+    }
 
 
 

@@ -18,18 +18,8 @@ public class MainTest {
 
 
     public static void main(String[] args) throws InterruptedException {
-        AccountDaoImpl accountDao = new AccountDaoImpl();
-        List<Account> accounts = accountDao.getAccountList();
-        for(Account account : accounts){
-            System.out.println(account);
-        }
-        //  分割线
-        System.out.println("====================================");
-        accountDao.update();
-        for(Account account : accounts){
-            System.out.println(account);
-        }
-
+        FileController fileController = new FileController();
+        fileController.writeToExcel2();
         System.out.println("Hello World!");
     }
 

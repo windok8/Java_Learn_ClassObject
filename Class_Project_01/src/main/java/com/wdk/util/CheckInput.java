@@ -58,6 +58,54 @@ public class CheckInput {
 
     }
 
+    /**
+     * @Author: Windok
+     * @Description:    检查用户输入的邮箱是否符合要求
+     * @return String
+     **/
+    public String check_Email_Input() {
+        String input = new Scanner(System.in).nextLine();
+        while (true) {
+            try {
+                if (input.length() == 0) {
+                    throw new SystemException(ERROR_INPUT);
+                }
+                if (!input.matches("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$")) {
+                    throw new SystemException(ERROR_INPUT);
+                }
+                return input;
+            } catch (SystemException e) {
+                System.out.println(e.getMessage());
+                System.out.print(RE_ENTER);
+                input = new Scanner(System.in).nextLine();
+            }
+        }
+    }
+
+    /**
+     * @Author: Windok
+     * @Description:    检查用户输入的手机号是否符合要求
+     * @return String
+     **/
+    public String check_Phone_Input() {
+        String input = new Scanner(System.in).nextLine();
+        while (true) {
+            try {
+                if (input.length() == 0) {
+                    throw new SystemException(ERROR_INPUT);
+                }
+                if (!input.matches("^1[3-9]\\d{9}$")) {
+                    throw new SystemException(ERROR_INPUT);
+                }
+                return input;
+            } catch (SystemException e) {
+                System.out.println(e.getMessage());
+                System.out.print(RE_ENTER);
+                input = new Scanner(System.in).nextLine();
+            }
+        }
+    }
+
 
 
 

@@ -1,20 +1,16 @@
 package com.wdk.controller;
 
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.read.listener.ReadListener;
-import com.alibaba.excel.util.DateUtils;
-import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.wdk.pojo.Account;
-import com.wdk.pojo.DemoData;
+import com.wdk.pojo.GenderEnum;
+import com.wdk.pojo.User;
 import com.wdk.pojo.UserLevel;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.usermodel.DateUtil;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -27,9 +23,24 @@ import java.util.*;
 public class FileController {
 
     public void writeToExcel(){
-        String fileName = "F:\\Dev_Demo\\Class_Project_Demo\\Class_Project_01\\src\\main\\resources\\database\\data.xlsx";
+        String fileName = "F:\\Dev_Demo\\Class_Project_Demo\\Class_Project_01\\src\\main\\resources\\database\\data01.xlsx";
         List<Account> list = this.getList();
-        EasyExcel.write(fileName, DemoData.class).sheet("模板").head(Account.class).doWrite(list);
+        EasyExcel.write(fileName, Account.class).sheet("模板").head(Account.class).doWrite(list);
+    }
+
+    public void writeToExcel2(){
+        String fileName = "F:\\Dev_Demo\\Class_Project_Demo\\Class_Project_01\\src\\main\\resources\\database\\data01.xlsx";
+        List<Account> list = this.getList();
+        ExcelWriter excelWriter = EasyExcel.write(fileName).build();
+
+        // 创建WriteSheet对象
+        WriteSheet writeSheet = EasyExcel.writerSheet("Sheet1").build();
+
+        // 写入数据到Excel
+        excelWriter.write(list, writeSheet);
+
+        // 关闭ExcelWriter，释放资源
+        excelWriter.finish();
     }
 
     public List<Account> readExcelToList() {
@@ -40,6 +51,7 @@ public class FileController {
         }
         return lists;
     }
+
 
     @SneakyThrows
     private List<Account> getList() {

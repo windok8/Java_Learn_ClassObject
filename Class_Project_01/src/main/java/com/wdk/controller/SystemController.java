@@ -1,6 +1,7 @@
 package com.wdk.controller;
 
 import com.wdk.util.CheckInput;
+import com.wdk.util.MenuModule;
 
 /**
  * @author : Windok
@@ -23,7 +24,7 @@ public class SystemController {
 
     public void startScreen() throws InterruptedException {
         menuModule.waitToMenu("首页");
-        menuModule.main_Menu();
+        menuModule.login_Menu();
         int result = checkInput.check_Menu_Input("menu0");
         switch (result) {
             case 1:

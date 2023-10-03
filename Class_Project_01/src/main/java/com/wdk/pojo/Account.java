@@ -1,5 +1,6 @@
 package com.wdk.pojo;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
@@ -13,6 +14,7 @@ import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Convert
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -43,13 +45,18 @@ public class Account implements Serializable {
     @ExcelProperty(value = "最后登录时间")
     @DateTimeFormat(value = "yyyy年MM月dd HH:mm:ss")
     private Date lastLoginTime;
-
+    @ColumnWidth(23)
+    @ExcelProperty(value = "菜谱数据")
+    private List<Integer> cookIDList;
+    @ExcelIgnore
+    private User user;
 
 
     public Account() {
         //  随机生成一个5位数 id 值，首位不能为 0
         // TODO: 需要检验 id 是否重复
         this.id =new Random().nextInt(999999 - 100000 + 1) + 100000;
+        this.user.setUid(this.id);
         this.createTime = new Date();
         this.lastLoginTime = new Date();
         this.userLevel = UserLevel.USER;

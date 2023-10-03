@@ -1,5 +1,7 @@
 package com.wdk.controller;
 
+import com.wdk.util.MenuModule;
+
 import java.util.Scanner;
 
 /**
