@@ -12,10 +12,6 @@ import java.util.List;
  */
 public interface AccountService {
 
-    //  根据用户名和密码查询用户
-    public boolean isExist(String username, String password);
 
-    //  将多个用户信息写入到 Excel 文件中
-    List<Account> writeToExcel();
 
 }

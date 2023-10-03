@@ -14,14 +14,5 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
 
 
-    @Override
-    public boolean isExist(String username, String password) {
 
-        return false;
-    }
-
-    @Override
-    public List<Account> writeToExcel() {
-        return null;
-    }
 }

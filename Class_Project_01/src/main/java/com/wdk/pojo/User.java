@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author : Windok
  * @date: 2023-10-03
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements Serializable {
 
     @ExcelProperty(value = "用户ID")
     private Integer uid;

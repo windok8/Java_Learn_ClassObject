@@ -67,6 +67,19 @@ public class MenuModule {
         draw_Line(2);
     }
 
-
+    /**
+     * @Author: Windok
+     * @Description: 用户个人信息菜单菜单
+     **/
+    public void userInfo_Menu(){
+        draw_Line(2);
+        System.out.println("\t\t\t\t【用户个人信息】");
+        System.out.println("\t\t\t\t【1】查看个人信息");
+        System.out.println("\t\t\t\t【2】修改个人信息");
+        System.out.println("\t\t\t\t【3】修改密码");
+        System.out.println("\t\t\t\t【4】注销账号");
+        System.out.println("\t\t\t\t【0】返回上一级");
+        draw_Line(2);
+    }
 
 }

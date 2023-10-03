@@ -23,7 +23,7 @@ public class SystemController {
     }
 
     public void startScreen() throws InterruptedException {
-        menuModule.waitToMenu("首页");
+        menuModule.waitToMenu("登录页面");
         menuModule.login_Menu();
         int result = checkInput.check_Menu_Input("menu0");
         switch (result) {

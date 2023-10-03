@@ -27,4 +27,21 @@ public class UserController {
 
     }
 
+    public void register() throws InterruptedException {
+        menuModule.waitToMenu("注册");
+        System.out.print("请输入用户名：");
+        //  TODO: 需要判断用户名是否已经存在
+        String username = scanner.next();
+        System.out.print("请输入密码：");
+        String password = scanner.next();
+        System.out.print("请再次输入密码：");
+        String password2 = scanner.next();
+        if (password.equals(password2)) {
+            System.out.println("注册成功！");
+        } else {
+            System.out.println("两次密码不一致，请重新注册！");
+            register();
+        }
+    }
+
 }
