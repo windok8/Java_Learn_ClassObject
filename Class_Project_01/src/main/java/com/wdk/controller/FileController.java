@@ -32,30 +32,35 @@ public class FileController {
         EasyExcel.write(fileName, DemoData.class).sheet("模板").head(Account.class).doWrite(list);
     }
 
+    public List<Account> readExcelToList() {
+        InputStream inputStream = EasyExcel.class.getClassLoader().getResourceAsStream("database/data.xlsx");
+        List<Account> lists = EasyExcel.read(inputStream).sheet().head(Account.class).doReadSync();
+        for (Account item : lists) {
+            log.info("读取到的数据：{}", item);
+        }
+        return lists;
+    }
+
     @SneakyThrows
     private List<Account> getList() {
         Account account1 = new Account();
-        account1.setUsername("张三");
+        account1.setUsername("test01");
         account1.setPassword("123456");
-        account1.setUserLevel(UserLevel.USER);
-        account1.setCreateTime(new Date());
-        account1.setLastLoginTime(new Date());
+        account1.setUserLevel(UserLevel.SUPER_ADMIN);
         Account account2 = new Account();
-        account2.setUsername("李四");
-        account2.setPassword("123456");
-        account2.setUserLevel(UserLevel.SUPER_ADMIN);
-        account2.setCreateTime(DateUtils.parseDate("2023-09-14"));
-        account2.setLastLoginTime(DateUtils.parseDate("2023-09-24"));
+        account2.setUsername("test02");
+        account2.setPassword("a123456");
+        account2.setUserLevel(UserLevel.ADMIN);
         Account account3 = new Account();
-        account3.setUsername("王五");
-        account3.setPassword("123456");
-        account3.setUserLevel(UserLevel.ADMIN);
-        account3.setCreateTime(DateUtils.parseDate("2023-10-01"));
-        account3.setLastLoginTime(new Date());
+        account3.setUsername("test03");
+        account3.setPassword("b123456");
+        account3.setUserLevel(UserLevel.AUTHOR);
+        Account account4 = new Account();
+        account4.setUsername("test04");
+        account4.setPassword("c123456");
+        account4.setUserLevel(UserLevel.USER);
 
-
-
-        return Arrays.asList(account1, account2, account3);
+        return Arrays.asList(account1,account2,account3,account4);
     }
 
 }

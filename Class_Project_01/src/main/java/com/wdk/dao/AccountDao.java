@@ -14,5 +14,7 @@ public interface AccountDao {
     void delete();
     //  更新一条数据
     void update();
+    //  写入所有数据
+    void writeAllData();
 
 }

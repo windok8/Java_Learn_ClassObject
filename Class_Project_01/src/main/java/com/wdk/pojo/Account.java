@@ -3,6 +3,7 @@ package com.wdk.pojo;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.alibaba.excel.annotation.write.style.ContentStyle;
 import com.wdk.util.UserLevelConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Convert
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * @author : Windok
@@ -20,8 +22,8 @@ import java.util.Date;
  * @version: 1.0
  */
 
-@AllArgsConstructor
 @Data
+@ContentStyle(fillForegroundColor = 10)
 public class Account implements Serializable {
 
     @ExcelProperty(value = "用户ID")
@@ -30,8 +32,8 @@ public class Account implements Serializable {
     private String username;
     @ExcelProperty(value = "密码")
     private String password;
-    @ColumnWidth(10)
-    @ExcelProperty(value = "用户级别",converter = UserLevelConverter.class)
+    @ColumnWidth(15)
+    @ExcelProperty(value = "用户级别", converter = UserLevelConverter.class)
     private UserLevel userLevel;
     @ColumnWidth(23)
     @ExcelProperty(value = "创建时间")
@@ -42,14 +44,24 @@ public class Account implements Serializable {
     @DateTimeFormat(value = "yyyy年MM月dd HH:mm:ss")
     private Date lastLoginTime;
 
-    //  创建 Account 对象时，随机生成 id 值
-    public Account(){
-        this.id = (int) (Math.random() * 100000);
+
+
+    public Account() {
+        //  随机生成一个5位数 id 值，首位不能为 0
+        // TODO: 需要检验 id 是否重复
+        this.id =new Random().nextInt(999999 - 100000 + 1) + 100000;
         this.createTime = new Date();
+        this.lastLoginTime = new Date();
         this.userLevel = UserLevel.USER;
     }
 
-
-
-
+    public Account(Integer id, String username, String password, UserLevel userLevel, Date createTime, Date lastLoginTime) {
+        // TODO: 需要检验 id 是否重复
+        this.id =new Random().nextInt(999999 - 100000 + 1) + 100000;
+        this.username = username;
+        this.password = password;
+        this.userLevel = userLevel;
+        this.createTime = createTime;
+        this.lastLoginTime = lastLoginTime;
+    }
 }

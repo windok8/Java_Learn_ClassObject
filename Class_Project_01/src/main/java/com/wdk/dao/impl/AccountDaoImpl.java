@@ -1,8 +1,12 @@
 package com.wdk.dao.impl;
 
+import com.wdk.controller.FileController;
 import com.wdk.dao.AccountDao;
 import com.wdk.pojo.Account;
+import com.wdk.pojo.UserLevel;
+import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,16 +15,15 @@ import java.util.List;
  * @Description:
  * @version: 1.0
  */
+@Data
 public class AccountDaoImpl implements AccountDao {
 
-    private List<Account> accountList;
+    FileController fileController = new FileController();
+    private List<Account> accountList = new FileController().readExcelToList();
 
-    public List<Account> getAccountList() {
-        return accountList;
-    }
+    @Override
+    public void writeAllData() {
 
-    public void setAccountList(List<Account> accountList) {
-        this.accountList = accountList;
     }
 
     @Override
@@ -35,6 +38,6 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public void update() {
-
+        accountList.add(new Account(null,"Test_New","n123456", UserLevel.USER,new Date(),new Date()));
     }
 }
