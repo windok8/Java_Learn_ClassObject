@@ -3,53 +3,57 @@ package com.wdk.controller;
 /**
  * @author : Windok
  * @date: 2023-10-03
- * @Description:    菜单模块
+ * @Description: 菜单模块
  * @version: 1.0
  */
 public class MenuModule {
 
+    private static String DELIMITER_1 = "--------------------------------------------------";
+    private static String DELIMITER_2 = "==================================================";
+
+    private void draw_Line(int i) {
+        if (i == 1) System.out.println(DELIMITER_1);
+        else if (i == 2) System.out.println(DELIMITER_2);
+    }
+
     /**
-     * @Author: Windok
-     * @Description:    等待跳转
      * @param where 跳转的目的地
+     * @Author: Windok
+     * @Description: 等待跳转
      **/
     public void waitToMenu(String where) throws InterruptedException {
-        //  输出一条分割线
-        java.lang.System.out.println("--------------------------------------------------");
+        System.out.println();
+        draw_Line(1);
         //  随机生成等待时间 [5-10]
         int waitTime = (int) (Math.random() * 5 + 5);
-        java.lang.System.out.println("正在前往【"+where+"】，请等待【" + waitTime + "】秒");
+        System.out.println("正在前往【" + where + "】，请等待【" + waitTime + "】秒");
         for (int i = 0; i < waitTime; i++) {
-            if (i < waitTime - 1) java.lang.System.out.print("*\t");
+            if (i < waitTime - 1) System.out.print("*\t");
             else {
-                java.lang.System.out.print("*\n");
+                System.out.print("*\n");
             }
             Thread.sleep(1000);
         }
-        java.lang.System.out.println("--------------------------------------------------");
-        java.lang.System.out.println("\t\t\t\t【跳转成功!】");
-        java.lang.System.out.println("--------------------------------------------------");
-        java.lang.System.out.println();
-        java.lang.System.out.println();
-        java.lang.System.out.println();
+        draw_Line(1);
+        System.out.println("\t\t\t\t【跳转成功!】");
+        draw_Line(1);
+        System.out.println();
     }
 
 
     /**
      * @Author: Windok
-     * @Description:    主菜单
+     * @Description: 主菜单
      **/
     public void main_Menu() {
-        //  输出一条 = 分割线
-        java.lang.System.out.println("==================================================");
+        draw_Line(2);
         //  输出主菜单
-        java.lang.System.out.println("\t\t\t\t【美食之家】");
-        java.lang.System.out.println("\t\t\t\t【1】登录");
-        java.lang.System.out.println("\t\t\t\t【2】注册");
-        java.lang.System.out.println("\t\t\t\t【0】退出");
-        java.lang.System.out.println("==================================================");
+        System.out.println("\t\t\t\t【美食之家】");
+        System.out.println("\t\t\t\t【1】登录");
+        System.out.println("\t\t\t\t【2】注册");
+        System.out.println("\t\t\t\t【0】退出");
+        draw_Line(2);
     }
-
 
 
 

@@ -1,9 +1,13 @@
 package com.wdk.pojo;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.format.DateTimeFormat;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.wdk.util.UserLevelConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Convert;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -15,33 +19,37 @@ import java.util.Date;
  * @Description:
  * @version: 1.0
  */
-@NoArgsConstructor
+
 @AllArgsConstructor
 @Data
 public class Account implements Serializable {
 
-    @ExcelProperty("用户ID")
+    @ExcelProperty(value = "用户ID")
     private Integer id;
-    @ExcelProperty("用户名")
+    @ExcelProperty(value = "用户名")
     private String username;
-    @ExcelProperty("密码")
+    @ExcelProperty(value = "密码")
     private String password;
-    @ExcelProperty("用户级别")
+    @ColumnWidth(10)
+    @ExcelProperty(value = "用户级别",converter = UserLevelConverter.class)
     private UserLevel userLevel;
-    @ExcelProperty("创建时间")
+    @ColumnWidth(23)
+    @ExcelProperty(value = "创建时间")
+    @DateTimeFormat(value = "yyyy年MM月dd HH:mm:ss")
     private Date createTime;
-    @ExcelProperty("最后登录时间")
+    @ColumnWidth(23)
+    @ExcelProperty(value = "最后登录时间")
+    @DateTimeFormat(value = "yyyy年MM月dd HH:mm:ss")
     private Date lastLoginTime;
 
     //  创建 Account 对象时，随机生成 id 值
-    public Account(String username, String password) {
+    public Account(){
         this.id = (int) (Math.random() * 100000);
-        this.username = username;
-        this.password = password;
-        this.userLevel = UserLevel.USER;
         this.createTime = new Date();
-        this.lastLoginTime = new Date();
+        this.userLevel = UserLevel.USER;
     }
+
+
 
 
 }

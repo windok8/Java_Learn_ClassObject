@@ -1,6 +1,9 @@
 package com.wdk.service.impl;
 
+import com.wdk.pojo.Account;
 import com.wdk.service.AccountService;
+
+import java.util.List;
 
 /**
  * @author : Windok
@@ -10,8 +13,15 @@ import com.wdk.service.AccountService;
  */
 public class AccountServiceImpl implements AccountService {
 
+
     @Override
-    public boolean login(String username, String password) {
+    public boolean isExist(String username, String password) {
+
         return false;
+    }
+
+    @Override
+    public List<Account> writeToExcel() {
+        return null;
     }
 }

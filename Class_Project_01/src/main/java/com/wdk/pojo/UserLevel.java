@@ -1,11 +1,14 @@
 package com.wdk.pojo;
 
+import lombok.Data;
+
 /**
  * @author : Windok
  * @date: 2023-10-03
  * @Description: 用户级别
  * @version: 1.0
  */
+
 public enum UserLevel {
 
     SUPER_ADMIN("超级管理员"),

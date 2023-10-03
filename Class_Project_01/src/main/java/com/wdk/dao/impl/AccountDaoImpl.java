@@ -1,6 +1,9 @@
 package com.wdk.dao.impl;
 
 import com.wdk.dao.AccountDao;
+import com.wdk.pojo.Account;
+
+import java.util.List;
 
 /**
  * @author : Windok
@@ -10,6 +13,15 @@ import com.wdk.dao.AccountDao;
  */
 public class AccountDaoImpl implements AccountDao {
 
+    private List<Account> accountList;
+
+    public List<Account> getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
+    }
 
     @Override
     public void insert() {
