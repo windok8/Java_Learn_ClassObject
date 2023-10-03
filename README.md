@@ -2,7 +2,7 @@
 
 ## Class_Object_01
 ### 项目介绍
-```text
+```markdown
 &emsp;&emsp;这是一个菜谱信息管理系统
 &emsp;&emsp;主要功能有：
 &emsp;&emsp;&emsp;&emsp;1.添加菜谱
