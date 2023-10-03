@@ -26,6 +26,7 @@ public class SystemController {
         int result = checkInput.check_Menu_Input("menu0");
         switch (result){
             case 1:
+
             case 2:
             case 0:
                 System.out.println("感谢您的使用，再见！");

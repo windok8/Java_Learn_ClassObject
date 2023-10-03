@@ -11,5 +11,18 @@ import com.wdk.dao.AccountDao;
 public class AccountDaoImpl implements AccountDao {
 
 
+    @Override
+    public void insert() {
 
+    }
+
+    @Override
+    public void delete() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
 }
