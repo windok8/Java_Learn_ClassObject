@@ -31,6 +31,7 @@ public class SystemController {
                 userController.login();
                 break;
             case 2:
+                userController.register();
                 break;
             case 0:
                 System.out.println("感谢您的使用，再见！");

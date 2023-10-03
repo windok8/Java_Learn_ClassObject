@@ -5,6 +5,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentStyle;
+import com.wdk.util.DataHolder;
 import com.wdk.util.UserLevelConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -53,9 +54,11 @@ public class Account implements Serializable {
 
 
     public Account() {
-        //  随机生成一个5位数 id 值，首位不能为 0
-        // TODO: 需要检验 id 是否重复
-        this.id =new Random().nextInt(999999 - 100000 + 1) + 100000;
+        int randomNumber =new Random().nextInt(999999 - 100000 + 1) + 100000;
+        while (DataHolder.getUidList().contains(randomNumber)) {
+            randomNumber =new Random().nextInt(999999 - 100000 + 1) + 100000;
+        }
+        this.id = randomNumber;
         this.user.setUid(this.id);
         this.createTime = new Date();
         this.lastLoginTime = new Date();
@@ -63,8 +66,11 @@ public class Account implements Serializable {
     }
 
     public Account(Integer id, String username, String password, UserLevel userLevel, Date createTime, Date lastLoginTime) {
-        // TODO: 需要检验 id 是否重复
-        this.id =new Random().nextInt(999999 - 100000 + 1) + 100000;
+        int randomNumber =new Random().nextInt(999999 - 100000 + 1) + 100000;
+        while (DataHolder.getUidList().contains(randomNumber)) {
+            randomNumber =new Random().nextInt(999999 - 100000 + 1) + 100000;
+        }
+        this.id = randomNumber;
         this.username = username;
         this.password = password;
         this.userLevel = userLevel;

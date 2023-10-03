@@ -1,5 +1,7 @@
 package com.wdk.dao;
 
+import com.wdk.pojo.Account;
+
 /**
  * @author : Windok
  * @date: 2023-10-03
@@ -8,13 +10,6 @@ package com.wdk.dao;
  */
 public interface AccountDao {
 
-    //  插入一条数据
-    void insert();
-    //  删除一条数据
-    void delete();
-    //  更新一条数据
-    void update();
-    //  写入所有数据
-    void writeAllData();
-
+    //  更新用户信息
+    void update_AddAccount(Account account);
 }

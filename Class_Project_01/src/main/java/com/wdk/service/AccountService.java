@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface AccountService {
 
-
+    Account addAccount(String userName,String password);
 
 }

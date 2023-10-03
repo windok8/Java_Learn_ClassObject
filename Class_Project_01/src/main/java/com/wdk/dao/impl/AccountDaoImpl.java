@@ -18,26 +18,9 @@ import java.util.List;
 @Data
 public class AccountDaoImpl implements AccountDao {
 
-    FileController fileController = new FileController();
-    private List<Account> accountList = new FileController().readExcelToList();
 
     @Override
-    public void writeAllData() {
+    public void update_AddAccount(Account account) {
 
-    }
-
-    @Override
-    public void insert() {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
-    @Override
-    public void update() {
-        accountList.add(new Account(null,"Test_New","n123456", UserLevel.USER,new Date(),new Date()));
     }
 }

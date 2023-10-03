@@ -28,7 +28,8 @@ public class Commit implements Serializable {
     private Integer likes;
 
     public Commit() {
-        this.cid =new Random().nextInt(999999 - 100000 + 1) + 100000;
+        int randomNumber =new Random().nextInt(999999 - 100000 + 1) + 100000;
+
     }
 
 
