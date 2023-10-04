@@ -6,6 +6,7 @@ import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentStyle;
 import com.wdk.util.DataHolder;
+import com.wdk.util.UniqueIDGenerator;
 import com.wdk.util.UserLevelConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,6 @@ import java.util.Random;
  * @Description:
  * @version: 1.0
  */
-
 @Data
 @ContentStyle(fillForegroundColor = 10)
 public class Account implements Serializable {
@@ -54,23 +54,17 @@ public class Account implements Serializable {
 
 
     public Account() {
-        int randomNumber =new Random().nextInt(999999 - 100000 + 1) + 100000;
-        while (DataHolder.getUidList().contains(randomNumber)) {
-            randomNumber =new Random().nextInt(999999 - 100000 + 1) + 100000;
-        }
-        this.id = randomNumber;
-        this.user.setUid(this.id);
+        this.id = (new Random().nextInt(999 - 100 + 1) + 100) * 1000 + UniqueIDGenerator.generateUniqueNumber();
+        User user = new User();
+        user.setUid(this.id);
+        this.user = user;
         this.createTime = new Date();
         this.lastLoginTime = new Date();
         this.userLevel = UserLevel.USER;
     }
 
     public Account(Integer id, String username, String password, UserLevel userLevel, Date createTime, Date lastLoginTime) {
-        int randomNumber =new Random().nextInt(999999 - 100000 + 1) + 100000;
-        while (DataHolder.getUidList().contains(randomNumber)) {
-            randomNumber =new Random().nextInt(999999 - 100000 + 1) + 100000;
-        }
-        this.id = randomNumber;
+        this.id = (new Random().nextInt(999 - 100 + 1) + 100) * 1000 + UniqueIDGenerator.generateUniqueNumber();
         this.username = username;
         this.password = password;
         this.userLevel = userLevel;

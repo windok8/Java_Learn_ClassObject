@@ -10,6 +10,8 @@ import com.wdk.pojo.Account;
  */
 public interface AccountDao {
 
-    //  更新用户信息
-    void update_AddAccount(Account account);
+
+
+    //  根据账户信息在集合的索引获取 Account 对象
+    Account getAccountByIndex(int index);
 }

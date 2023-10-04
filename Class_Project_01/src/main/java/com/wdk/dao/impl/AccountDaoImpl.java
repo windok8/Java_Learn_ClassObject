@@ -4,6 +4,7 @@ import com.wdk.controller.FileController;
 import com.wdk.dao.AccountDao;
 import com.wdk.pojo.Account;
 import com.wdk.pojo.UserLevel;
+import com.wdk.util.DataHolder;
 import lombok.Data;
 
 import java.util.Date;
@@ -20,7 +21,8 @@ public class AccountDaoImpl implements AccountDao {
 
 
     @Override
-    public void update_AddAccount(Account account) {
-
+    public Account getAccountByIndex(int index) {
+        Account result = DataHolder.getAccountList().get(index);
+        return result;
     }
 }

@@ -5,6 +5,7 @@ import com.wdk.controller.SystemController;
 import com.wdk.dao.impl.AccountDaoImpl;
 import com.wdk.pojo.Account;
 import com.wdk.pojo.UserLevel;
+import com.wdk.util.UniqueIDGenerator;
 
 import java.util.List;
 
@@ -17,10 +18,13 @@ import java.util.List;
 public class MainTest {
 
 
-    public static void main(String[] args) throws InterruptedException {
-        FileController fileController = new FileController();
-        fileController.writeToExcel2();
-        System.out.println("Hello World!");
+    public static void main(String[] args) throws Exception {
+
+        SystemController systemController = new SystemController();
+        systemController.firstStart();
+        systemController.startScreen();
+
+
     }
 
 }

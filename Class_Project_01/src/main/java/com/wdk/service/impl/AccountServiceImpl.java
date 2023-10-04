@@ -17,12 +17,20 @@ public class AccountServiceImpl implements AccountService {
 
     AccountDaoImpl accountDao = new AccountDaoImpl();
 
-    @Override
-    public Account addAccount(String userName, String password) {
-        Account account = new Account();
-        account.setUsername(userName);
-        account.setPassword(password);
 
-        return account;
+    /**
+     * @param index   用户名在集合中的索引
+     * @param password  用户输入的密码
+     * @return
+     */
+    @Override
+    public boolean isAccountByPassword(int index, String password) {
+        Account account = accountDao.getAccountByIndex(index);
+        if(account.getPassword().equals(password)){
+            return true;
+        }
+        return false;
     }
+
+
 }

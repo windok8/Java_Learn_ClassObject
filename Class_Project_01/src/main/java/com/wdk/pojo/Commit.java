@@ -1,6 +1,7 @@
 package com.wdk.pojo;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.wdk.util.UniqueIDGenerator;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -28,7 +29,7 @@ public class Commit implements Serializable {
     private Integer likes;
 
     public Commit() {
-        int randomNumber =new Random().nextInt(999999 - 100000 + 1) + 100000;
+        int randomNumber = (new Random().nextInt(999 - 100 + 1) + 100) * 1000 + UniqueIDGenerator.generateUniqueNumber();
 
     }
 

@@ -23,7 +23,7 @@ import java.util.*;
 public class FileController {
 
     public void writeToExcel(){
-        String fileName = "F:\\Dev_Demo\\Class_Project_Demo\\Class_Project_01\\src\\main\\resources\\database\\data01.xlsx";
+        String fileName = "F:\\Dev_Demo\\Class_Project_Demo\\Class_Project_01\\src\\main\\resources\\database\\data.xlsx";
         List<Account> list = this.getList();
         EasyExcel.write(fileName, Account.class).sheet("模板").head(Account.class).doWrite(list);
     }
@@ -43,7 +43,7 @@ public class FileController {
         excelWriter.finish();
     }
 
-    public List<Account> readExcelToList() {
+    public List<Account> readExcelToList_Account() {
         InputStream inputStream = EasyExcel.class.getClassLoader().getResourceAsStream("database/data.xlsx");
         List<Account> lists = EasyExcel.read(inputStream).sheet().head(Account.class).doReadSync();
         for (Account item : lists) {

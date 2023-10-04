@@ -67,6 +67,11 @@ public class MenuModule {
         draw_Line(2);
     }
 
+
+    public void front_Page_Menu(){
+
+    }
+
     /**
      * @Author: Windok
      * @Description: 用户个人信息菜单菜单

@@ -4,6 +4,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentStyle;
+import com.wdk.util.UniqueIDGenerator;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,7 +20,7 @@ import java.util.Random;
  */
 @Data
 @ContentStyle(fillForegroundColor = 10)
-public class CookBook implements Serializable{
+public class CookBook implements Serializable {
 
     @ExcelProperty(value = "菜品ID")
     private Integer cookID;
@@ -50,7 +51,7 @@ public class CookBook implements Serializable{
 
     //  创建 CookBook 对象时，自动生成一个 3 位数的 cookID 且首位不能为 0
     public CookBook() {
-        this.cookID =new Random().nextInt(999 - 100 + 1) + 100;
+        this.cookID = (new Random().nextInt(999 - 100 + 1) + 100) * 1000 + UniqueIDGenerator.generateUniqueNumber();
     }
 
 
