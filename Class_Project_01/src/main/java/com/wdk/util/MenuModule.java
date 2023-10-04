@@ -1,5 +1,7 @@
 package com.wdk.util;
 
+import com.wdk.pojo.UserLevel;
+
 /**
  * @author : Windok
  * @date: 2023-10-03
@@ -26,6 +28,7 @@ public class MenuModule {
         draw_Line(1);
         //  随机生成等待时间 [5-10]
         int waitTime = (int) (Math.random() * 5 + 5);
+        waitTime = 2;
         System.out.println("正在前往【" + where + "】，请等待【" + waitTime + "】秒");
         for (int i = 0; i < waitTime; i++) {
             if (i < waitTime - 1) System.out.print("*\t");
@@ -68,8 +71,23 @@ public class MenuModule {
     }
 
 
-    public void front_Page_Menu(){
-
+    public void front_Page_Menu(UserLevel level){
+        draw_Line(2);
+        System.out.println("\t\t\t\t【首页】");
+        System.out.println("\t\t\t\t【1】查看美食菜谱");
+        if(level!=UserLevel.GUEST){
+            System.out.println("\t\t\t\t【2】查看个人信息");
+            if(level == UserLevel.AUTHOR){
+                System.out.println("\t\t\t\t【3】查看我的菜谱");
+                System.out.println("\t\t\t\t【4】发布菜谱");
+            }
+            if (level == UserLevel.ADMIN || level == UserLevel.SUPER_ADMIN){
+                System.out.println("\t\t\t\t【3】查看所有菜谱");
+                System.out.println("\t\t\t\t【4】查看所有用户");
+            }
+        }
+        System.out.println("\t\t\t\t【0】登出");
+        draw_Line(2);
     }
 
     /**

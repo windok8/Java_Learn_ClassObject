@@ -24,9 +24,9 @@ public class GenderConverter implements Converter<GenderEnum> {
     public GenderEnum convertToJavaData(ReadConverterContext<?> context) throws Exception {
         if(context.getReadCellData() == null)
             return null;
-        if (context.getReadCellData().equals("男"))
+        if (context.getReadCellData().getStringValue().equals("男"))
             return GenderEnum.MAN;
-        else if (context.getReadCellData().equals("女"))
+        else if (context.getReadCellData().getStringValue().equals("女"))
             return GenderEnum.WOMAN;
         return null;
     }

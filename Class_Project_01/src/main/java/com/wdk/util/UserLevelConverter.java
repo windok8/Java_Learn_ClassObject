@@ -4,7 +4,11 @@ import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.converters.ReadConverterContext;
 
 import com.alibaba.excel.converters.WriteConverterContext;
+import com.alibaba.excel.metadata.GlobalConfiguration;
+import com.alibaba.excel.metadata.data.ReadCellData;
 import com.alibaba.excel.metadata.data.WriteCellData;
+import com.alibaba.excel.metadata.property.ExcelContentProperty;
+import com.sun.media.sound.SoftTuning;
 import com.wdk.pojo.UserLevel;
 
 /**
@@ -15,6 +19,7 @@ import com.wdk.pojo.UserLevel;
  */
 public class UserLevelConverter implements Converter<UserLevel> {
 
+
     /**
      * @Author: Windok
      * @Description:    将字符串转换为枚举类型
@@ -22,17 +27,18 @@ public class UserLevelConverter implements Converter<UserLevel> {
      **/
     @Override
     public UserLevel convertToJavaData(ReadConverterContext<?> context) throws Exception {
+        System.out.println(context.getReadCellData().getStringValue());
         if(context.getReadCellData() == null)
             return null;
-        if(context.getReadCellData().toString().equals("超级管理员"))
+        if(context.getReadCellData().getStringValue().equals("超级管理员"))
             return UserLevel.SUPER_ADMIN;
-        if(context.getReadCellData().toString().equals("管理员"))
+        if(context.getReadCellData().getStringValue().equals("管理员"))
             return UserLevel.ADMIN;
-        if(context.getReadCellData().toString().equals("作家"))
+        if(context.getReadCellData().getStringValue().equals("作家"))
             return UserLevel.AUTHOR;
-        if(context.getReadCellData().toString().equals("普通用户"))
+        if(context.getReadCellData().getStringValue().equals("普通用户"))
             return UserLevel.USER;
-        if(context.getReadCellData().toString().equals("游客"))
+        if(context.getReadCellData().getStringValue().equals("游客"))
             return UserLevel.GUEST;
         return null;
     }

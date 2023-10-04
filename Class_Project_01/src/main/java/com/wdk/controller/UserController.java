@@ -18,10 +18,10 @@ public class UserController {
     private static String ERROR_ICON = "【\u26A0】";
     Scanner scanner = new Scanner(System.in);
     MenuModule menuModule = new MenuModule();
-    SystemController systemController = new SystemController();
     AccountServiceImpl accountService = new AccountServiceImpl();
 
-    public void login() throws InterruptedException {
+
+    public Account login() throws InterruptedException {
         int oppty = 3;
         menuModule.waitToMenu("登录页面");
         System.out.print("请输入用户名：");
@@ -47,7 +47,7 @@ public class UserController {
         }
         //  TODO:   登录成功后 需要进行获取 输出用户信息
         System.out.println("登录成功！");
-        systemController.frontPage();
+        return DataHolder.getAccountList().get(index);
 
     }
 

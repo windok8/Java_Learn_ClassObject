@@ -60,7 +60,6 @@ public class Account implements Serializable {
         this.user = user;
         this.createTime = new Date();
         this.lastLoginTime = new Date();
-        this.userLevel = UserLevel.USER;
     }
 
     public Account(Integer id, String username, String password, UserLevel userLevel, Date createTime, Date lastLoginTime) {

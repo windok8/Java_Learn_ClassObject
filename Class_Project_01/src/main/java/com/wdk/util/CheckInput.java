@@ -1,5 +1,7 @@
 package com.wdk.util;
 
+import com.wdk.pojo.UserLevel;
+
 import java.util.Scanner;
 
 /**
@@ -24,6 +26,11 @@ public class CheckInput {
         int result = 0;
         System.out.print(IN_ENTER);
         String input = new Scanner(System.in).nextLine();
+        while (input.length() == 0) {
+            System.out.println(ERROR_INPUT);
+            System.out.print(RE_ENTER);
+            input = new Scanner(System.in).nextLine();
+        }
         switch (menu) {
             case "menu0":
                 result = check_Value_Input(input,'2');
@@ -107,6 +114,31 @@ public class CheckInput {
     }
 
 
+    public int check_Front_Menu_Input(UserLevel level) {
+        int result = 0;
+        System.out.print(IN_ENTER);
+        String input = new Scanner(System.in).nextLine();
+        while (input.length() == 0) {
+            System.out.println(ERROR_INPUT);
+            System.out.print(RE_ENTER);
+            input = new Scanner(System.in).nextLine();
+        }
+        switch (level){
+            case GUEST:
+                result = check_Value_Input(input,'1');
+                break;
+            case USER:
+                result = check_Value_Input(input,'2');
+                break;
+            case AUTHOR:
+                result = check_Value_Input(input,'4');
+                break;
+            case ADMIN:
+            case SUPER_ADMIN:
+                result = check_Value_Input(input,'4');
+                break;
+        }
+        return result;
 
-
+    }
 }
