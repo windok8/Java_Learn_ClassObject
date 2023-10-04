@@ -13,8 +13,11 @@ import java.util.List;
 public interface AccountService {
 
 
+    void updataAccount(Account accountNow);
+
     //  判断用户输入的密码是否正确
-    boolean isAccountByPassword(int index,String password);
+    boolean isAccountByPassword(int index, String password);
+
     void addAccount(Account account);
 
 

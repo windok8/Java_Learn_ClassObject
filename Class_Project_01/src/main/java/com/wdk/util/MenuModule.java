@@ -53,22 +53,11 @@ public class MenuModule {
         System.out.println("\t\t\t\t【美食之家】");
         System.out.println("\t\t\t\t【1】登录");
         System.out.println("\t\t\t\t【2】注册");
+        System.out.println("\t\t\t\t【3】游览");
         System.out.println("\t\t\t\t【0】退出");
         draw_Line(2);
     }
 
-    /**
-     * @Author: Windok
-     * @Description: 注册账号菜单
-     **/
-    public void register_Menu(){
-        draw_Line(2);
-        System.out.println("\t\t\t\t【注册账号】");
-        System.out.println("\t\t\t\t【1】注册普通用户");
-        System.out.println("\t\t\t\t【2】注册成为作者");
-        System.out.println("\t\t\t\t【0】返回上一级");
-        draw_Line(2);
-    }
 
 
     public void front_Page_Menu(UserLevel level){

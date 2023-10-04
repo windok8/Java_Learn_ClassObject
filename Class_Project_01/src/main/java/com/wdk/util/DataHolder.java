@@ -58,13 +58,17 @@ public class DataHolder {
     }
 
 
+    public static List<User> getUserList() {
+        return userList;
+    }
+
     public static void setAccountList(List<Account> account_Old_List) {
         List<String> userDataNameList = new ArrayList<>();
         List<Integer> uidDataList = new ArrayList<>();
         Comparator<Account> ageComparator = (account1, account2) -> Integer.compare(account1.getId(), account2.getId());
         Collections.sort(account_Old_List, ageComparator);
         accountList = account_Old_List;
-        if(DataHolder.userNameList != null) userDataNameList = DataHolder.userNameList;
+        if (DataHolder.userNameList != null) userDataNameList = DataHolder.userNameList;
         if (DataHolder.uidList != null) uidDataList = DataHolder.uidList;
         userDataNameList.clear();
         //  取出所有用户名

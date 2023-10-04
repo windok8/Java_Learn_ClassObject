@@ -18,6 +18,11 @@ public class AccountServiceImpl implements AccountService {
     AccountDaoImpl accountDao = new AccountDaoImpl();
 
 
+    @Override
+    public void updataAccount(Account accountNow) {
+        accountDao.updataAccount(accountNow);
+    }
+
     /**
      * @param index   用户名在集合中的索引
      * @param password  用户输入的密码

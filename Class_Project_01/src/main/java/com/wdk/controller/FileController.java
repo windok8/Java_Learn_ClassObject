@@ -7,6 +7,7 @@ import com.wdk.pojo.Account;
 import com.wdk.pojo.GenderEnum;
 import com.wdk.pojo.User;
 import com.wdk.pojo.UserLevel;
+import com.wdk.util.DataHolder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,57 +23,35 @@ import java.util.*;
 @Slf4j
 public class FileController {
 
-    public void writeToExcel(){
+    public void write_Account_To_Excel() {
         String fileName = "F:\\Dev_Demo\\Class_Project_Demo\\Class_Project_01\\src\\main\\resources\\database\\data.xlsx";
-        List<Account> list = this.getList();
-        EasyExcel.write(fileName, Account.class).sheet("模板").head(Account.class).doWrite(list);
+        List<Account> list = DataHolder.getAccountList();
+        EasyExcel.write(fileName, Account.class).sheet(0,"账户信息").head(Account.class).doWrite(list);
     }
 
-    public void writeToExcel2(){
-        String fileName = "F:\\Dev_Demo\\Class_Project_Demo\\Class_Project_01\\src\\main\\resources\\database\\data01.xlsx";
-        List<Account> list = this.getList();
-        ExcelWriter excelWriter = EasyExcel.write(fileName).build();
-
-        // 创建WriteSheet对象
-        WriteSheet writeSheet = EasyExcel.writerSheet("Sheet1").build();
-
-        // 写入数据到Excel
-        excelWriter.write(list, writeSheet);
-
-        // 关闭ExcelWriter，释放资源
-        excelWriter.finish();
+    public void write_User_To_Excel() {
+        String fileName = "F:\\Dev_Demo\\Class_Project_Demo\\Class_Project_01\\src\\main\\resources\\database\\data.xlsx";
+        List<User> list = DataHolder.getUserList();
+        EasyExcel.write(fileName, User.class).sheet(1,"用户信息").head(User.class).doWrite(list);
     }
+
 
     public List<Account> readExcelToList_Account() {
         InputStream inputStream = EasyExcel.class.getClassLoader().getResourceAsStream("database/data.xlsx");
-        List<Account> lists = EasyExcel.read(inputStream).sheet().head(Account.class).doReadSync();
+        List<Account> lists = EasyExcel.read(inputStream).sheet(0).head(Account.class).doReadSync();
         for (Account item : lists) {
             log.info("读取到的数据：{}", item);
         }
         return lists;
     }
-
-
-    @SneakyThrows
-    private List<Account> getList() {
-        Account account1 = new Account();
-        account1.setUsername("test01");
-        account1.setPassword("123456");
-        account1.setUserLevel(UserLevel.SUPER_ADMIN);
-        Account account2 = new Account();
-        account2.setUsername("test02");
-        account2.setPassword("a123456");
-        account2.setUserLevel(UserLevel.ADMIN);
-        Account account3 = new Account();
-        account3.setUsername("test03");
-        account3.setPassword("b123456");
-        account3.setUserLevel(UserLevel.AUTHOR);
-        Account account4 = new Account();
-        account4.setUsername("test04");
-        account4.setPassword("c123456");
-        account4.setUserLevel(UserLevel.USER);
-
-        return Arrays.asList(account1,account2,account3,account4);
+    public List<User> readExcelToList_User() {
+        InputStream inputStream = EasyExcel.class.getClassLoader().getResourceAsStream("database/data.xlsx");
+        List<User> lists = EasyExcel.read(inputStream).sheet(1).head(User.class).doReadSync();
+        for (User item : lists) {
+            log.info("读取到的数据：{}", item);
+        }
+        return lists;
     }
+
 
 }

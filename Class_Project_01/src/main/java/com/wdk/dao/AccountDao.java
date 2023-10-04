@@ -16,4 +16,6 @@ public interface AccountDao {
     Account getAccountByIndex(int index);
 
     void addAccount(Account account);
+
+    void updataAccount(Account accountNow);
 }

@@ -31,4 +31,12 @@ public class AccountDaoImpl implements AccountDao {
         accountList.add(account);
         DataHolder.setAccountList(accountList);
     }
+
+    @Override
+    public void updataAccount(Account accountNow) {
+        int accountIndex = DataHolder.getUidList().indexOf(accountNow.getId());
+        if (DataHolder.getAccountList().get(accountIndex) != null) {
+            DataHolder.getAccountList().set(accountIndex, accountNow);
+        }
+    }
 }

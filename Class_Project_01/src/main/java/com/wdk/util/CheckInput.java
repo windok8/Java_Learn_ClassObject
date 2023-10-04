@@ -33,7 +33,10 @@ public class CheckInput {
         }
         switch (menu) {
             case "menu0":
-                result = check_Value_Input(input, '2');
+                result = check_Value_Input(input, '3');
+                break;
+            case "menu1":
+                result = check_Value_Input(input, '4');
                 break;
         }
         return result;

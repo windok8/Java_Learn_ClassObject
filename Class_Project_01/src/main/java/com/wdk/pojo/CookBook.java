@@ -28,6 +28,8 @@ public class CookBook implements Serializable {
     private String title;
     @ExcelProperty(value = "菜谱作者ID")
     private Integer uid;
+    @ExcelProperty(value = "菜谱作者")
+    private String author;
     @ExcelProperty(value = "菜品描述")
     private String description;
     @ExcelProperty(value = "作品点赞")
