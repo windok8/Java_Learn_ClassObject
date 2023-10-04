@@ -15,6 +15,7 @@ public interface AccountService {
 
     //  判断用户输入的密码是否正确
     boolean isAccountByPassword(int index,String password);
+    void addAccount(Account account);
 
 
 }

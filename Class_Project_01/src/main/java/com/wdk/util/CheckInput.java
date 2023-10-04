@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * @author : Windok
  * @date: 2023-10-03
- * @Description:    检查输入
+ * @Description: 检查输入
  * @version: 1.0
  */
 public class CheckInput {
@@ -17,12 +17,12 @@ public class CheckInput {
     private static String RE_ENTER = "请重新输入：";
 
     /**
-     * @Author: Windok
-     * @Description:    通过传入的菜单模块编号，检查用户输入的值是否符合当前菜单模块输入要求
-     * @param menu  菜单模块的编号
+     * @param menu 菜单模块的编号
      * @return int  返回用户输入的值
+     * @Author: Windok
+     * @Description: 通过传入的菜单模块编号，检查用户输入的值是否符合当前菜单模块输入要求
      **/
-    public int check_Menu_Input(String menu)  {
+    public int check_Menu_Input(String menu) {
         int result = 0;
         System.out.print(IN_ENTER);
         String input = new Scanner(System.in).nextLine();
@@ -33,20 +33,20 @@ public class CheckInput {
         }
         switch (menu) {
             case "menu0":
-                result = check_Value_Input(input,'2');
+                result = check_Value_Input(input, '2');
                 break;
         }
         return result;
     }
 
     /**
-     * @Author: Windok
-     * @Description:    检查用户输入的值是否符合当前菜单模块输入要求
-     * @param input 用户输入的值
-     * @param maxValue  当前菜单模块的最大值
+     * @param input    用户输入的值
+     * @param maxValue 当前菜单模块的最大值
      * @return int  返回用户输入的值
+     * @Author: Windok
+     * @Description: 检查用户输入的值是否符合当前菜单模块输入要求
      **/
-    private int check_Value_Input(String input,char maxValue)  {
+    public int check_Value_Input(String input, char maxValue) {
         while (true) {
             try {
                 if (input.length() != 1) {
@@ -66,12 +66,12 @@ public class CheckInput {
     }
 
     /**
-     * @Author: Windok
-     * @Description:    检查用户输入的邮箱是否符合要求
      * @return String
+     * @Author: Windok
+     * @Description: 检查用户输入的邮箱是否符合要求
      **/
-    public String check_Email_Input() {
-        String input = new Scanner(System.in).nextLine();
+    public String check_Email_Input(String string) {
+        String input = string;
         while (true) {
             try {
                 if (input.length() == 0) {
@@ -90,12 +90,12 @@ public class CheckInput {
     }
 
     /**
-     * @Author: Windok
-     * @Description:    检查用户输入的手机号是否符合要求
      * @return String
+     * @Author: Windok
+     * @Description: 检查用户输入的手机号是否符合要求
      **/
-    public String check_Phone_Input() {
-        String input = new Scanner(System.in).nextLine();
+    public String check_Phone_Input(String string) {
+        String input = string;
         while (true) {
             try {
                 if (input.length() == 0) {
@@ -123,19 +123,19 @@ public class CheckInput {
             System.out.print(RE_ENTER);
             input = new Scanner(System.in).nextLine();
         }
-        switch (level){
+        switch (level) {
             case GUEST:
-                result = check_Value_Input(input,'1');
+                result = check_Value_Input(input, '1');
                 break;
             case USER:
-                result = check_Value_Input(input,'2');
+                result = check_Value_Input(input, '2');
                 break;
             case AUTHOR:
-                result = check_Value_Input(input,'4');
+                result = check_Value_Input(input, '4');
                 break;
             case ADMIN:
             case SUPER_ADMIN:
-                result = check_Value_Input(input,'4');
+                result = check_Value_Input(input, '4');
                 break;
         }
         return result;

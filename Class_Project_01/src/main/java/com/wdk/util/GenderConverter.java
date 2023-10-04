@@ -28,6 +28,8 @@ public class GenderConverter implements Converter<GenderEnum> {
             return GenderEnum.MAN;
         else if (context.getReadCellData().getStringValue().equals("女"))
             return GenderEnum.WOMAN;
+        else if (context.getReadCellData().getStringValue().equals("未知"))
+            return GenderEnum.UNKNOWN;
         return null;
     }
 

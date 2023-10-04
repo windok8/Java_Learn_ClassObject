@@ -42,7 +42,7 @@ public class SystemController {
         switch (result) {
             //  登录
             case 1:
-                frontPage(userController.login());
+                userController.login();
                 break;
             //  注册
             case 2:
@@ -63,8 +63,7 @@ public class SystemController {
 
     public void frontPage(Account account) throws InterruptedException {
         menuModule.waitToMenu("首页");
-        System.out.println("当前级别:" + account.getUserLevel().getDescription());
-        System.out.println("当前级别:" + account.getUserLevel());
+        System.out.println("欢迎您，" + account.getUser().getRealName() + "！");
         menuModule.front_Page_Menu(account.getUserLevel());
         if (account == null) {
             int result = checkInput.check_Front_Menu_Input(UserLevel.GUEST);
@@ -93,6 +92,10 @@ public class SystemController {
             //  查看所有用户
             if (input == 4) return;
         }
+    }
+
+    public void view_info() {
+
     }
 
 

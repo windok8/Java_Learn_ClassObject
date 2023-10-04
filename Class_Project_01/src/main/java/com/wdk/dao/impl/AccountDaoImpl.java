@@ -19,10 +19,16 @@ import java.util.List;
 @Data
 public class AccountDaoImpl implements AccountDao {
 
-
     @Override
     public Account getAccountByIndex(int index) {
         Account result = DataHolder.getAccountList().get(index);
         return result;
+    }
+
+    @Override
+    public void addAccount(Account account) {
+        List<Account> accountList = DataHolder.getAccountList();
+        accountList.add(account);
+        DataHolder.setAccountList(accountList);
     }
 }

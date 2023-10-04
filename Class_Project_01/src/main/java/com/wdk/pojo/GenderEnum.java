@@ -9,7 +9,8 @@ package com.wdk.pojo;
 public enum GenderEnum {
 
     MAN("男"),
-    WOMAN("女");
+    WOMAN("女"),
+    UNKNOWN("未知");
 
     private final String description;
 

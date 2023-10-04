@@ -32,5 +32,10 @@ public class AccountServiceImpl implements AccountService {
         return false;
     }
 
+    @Override
+    public void addAccount(Account account) {
+        accountDao.addAccount(account);
+    }
+
 
 }

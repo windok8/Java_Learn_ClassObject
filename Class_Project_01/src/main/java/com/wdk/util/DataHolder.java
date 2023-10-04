@@ -58,11 +58,12 @@ public class DataHolder {
     }
 
 
-    public void setAccountList(List<Account> accountList) {
+    public static void setAccountList(List<Account> account_Old_List) {
         List<String> userDataNameList = new ArrayList<>();
         List<Integer> uidDataList = new ArrayList<>();
         Comparator<Account> ageComparator = (account1, account2) -> Integer.compare(account1.getId(), account2.getId());
-        Collections.sort(accountList, ageComparator);
+        Collections.sort(account_Old_List, ageComparator);
+        accountList = account_Old_List;
         if(DataHolder.userNameList != null) userDataNameList = DataHolder.userNameList;
         if (DataHolder.uidList != null) uidDataList = DataHolder.uidList;
         userDataNameList.clear();
@@ -77,7 +78,7 @@ public class DataHolder {
             uidDataList.add(account.getId());
         }
         DataHolder.uidList = uidDataList;
-        this.accountList = accountList;
+
     }
 
     public void setCookBookList(List<CookBook> cookBookList) {
