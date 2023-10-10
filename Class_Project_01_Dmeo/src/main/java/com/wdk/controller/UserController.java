@@ -3,8 +3,6 @@ package com.wdk.controller;
 import com.wdk.pojo.Account;
 import com.wdk.pojo.GenderEnum;
 import com.wdk.pojo.UserLevel;
-import com.wdk.service.AccountService;
-import com.wdk.service.impl.AccountServiceImpl;
 import com.wdk.util.CheckInput;
 import com.wdk.util.DataHolder;
 import com.wdk.util.MenuModule;
@@ -25,7 +23,6 @@ public class UserController {
     private static String ERROR_ICON = "【\u26A0】";
     Scanner scanner = new Scanner(System.in);
     MenuModule menuModule = new MenuModule();
-    AccountServiceImpl accountService = new AccountServiceImpl();
     CheckInput checkInput = new CheckInput();
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -45,7 +42,7 @@ public class UserController {
             System.out.print("请输入用户名：");
             username = scanner.next();
         }
-        while (!accountService.isAccountByPassword(index, password)) {
+        while (true) {
             if (oppty == 0) {
                 System.out.println(ERROR_ICON + "密码错误，您已经没有机会了！");
                 //  TODO:   退出程序
@@ -57,9 +54,9 @@ public class UserController {
             password = scanner.next();
         }
         //  TODO:   登录成功后 需要进行获取 输出用户信息
-        System.out.println("登录成功！");
-        this.account_Index = index;
-        this.account_Now = DataHolder.getAccountList().get(index);
+//        System.out.println("登录成功！");
+//        this.account_Index = index;
+//        this.account_Now = DataHolder.getAccountList().get(index);
     }
 
     public void register() throws InterruptedException {
@@ -105,7 +102,6 @@ public class UserController {
 
         account = user_Info_Write(account);
         account_Now = account;
-        accountService.addAccount(account);
     }
 
     private Account user_Info_Write(Account account) {

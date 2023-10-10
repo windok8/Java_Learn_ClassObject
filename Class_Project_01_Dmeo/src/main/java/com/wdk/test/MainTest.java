@@ -1,13 +1,6 @@
 package com.wdk.test;
 
-import com.wdk.controller.FileController;
 import com.wdk.controller.SystemController;
-import com.wdk.dao.impl.AccountDaoImpl;
-import com.wdk.pojo.Account;
-import com.wdk.pojo.UserLevel;
-import com.wdk.util.UniqueIDGenerator;
-
-import java.util.List;
 
 /**
  * @author : Windok

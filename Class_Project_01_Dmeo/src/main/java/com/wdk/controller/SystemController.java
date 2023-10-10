@@ -10,9 +10,9 @@ import java.text.SimpleDateFormat;
 
 /**
  * @author : Windok
- * @date: 2023-10-03
+ * @date: 2023-10-10
  * @Description: 系统控制器
- * @version: 1.0
+ * @version: 2.0
  */
 public class SystemController {
 
@@ -27,7 +27,6 @@ public class SystemController {
         java.lang.System.out.println();
         java.lang.System.out.println("欢迎来到美食之家");
         java.lang.System.out.println();
-
     }
 
     private void over_To_Menu() throws InterruptedException {
