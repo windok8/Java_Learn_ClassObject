@@ -167,7 +167,7 @@ public class UserController {
 
     public void update_User_Info() {
         account_Now = user_Info_Write(UserController.account_Now);
-        accountService.updataAccount(account_Now);
+//        accountService.updataAccount(account_Now);
     }
 
     public void update_User_Password() {
@@ -191,7 +191,7 @@ public class UserController {
             }
         }
         account_Now.setPassword(password1);
-        accountService.updataAccount(account_Now);
+//        accountService.updataAccount(account_Now);
     }
 
     public void delete_User() {
