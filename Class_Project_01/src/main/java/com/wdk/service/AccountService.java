@@ -25,4 +25,6 @@ public interface AccountService {
      * @return Account  返回账户信息
      **/
     Account getAccountById(int id);
+
+    boolean getAccountByUsername(String username);
 }

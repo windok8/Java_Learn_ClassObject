@@ -24,4 +24,9 @@ public class AccountServiceImpl implements AccountService {
     public Account getAccountById(int id) {
         return null;
     }
+
+    @Override
+    public boolean getAccountByUsername(String username) {
+        return false;
+    }
 }

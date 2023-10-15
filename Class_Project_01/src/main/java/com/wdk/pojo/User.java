@@ -19,8 +19,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class User implements Serializable {
 
-    @ExcelProperty(value = "用户ID")
-    private Integer uid;
+    @ExcelProperty(value = "用户昵称")
+    private String userName;
     @ExcelProperty(value = "真实姓名")
     private String realName;
     @ExcelProperty(value = "性别", converter = GenderConverter.class)

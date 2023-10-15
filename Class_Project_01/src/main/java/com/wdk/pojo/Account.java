@@ -51,7 +51,6 @@ public class Account implements Serializable {
     public Account() {
         this.id = (new Random().nextInt(999 - 100 + 1) + 100) * 1000 + UniqueIDGenerator.generateUniqueNumber();
         User user = new User();
-        user.setUid(this.id);
         this.user = user;
         this.createTime = new Date();
         this.lastLoginTime = new Date();

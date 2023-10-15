@@ -1,5 +1,6 @@
 package com.wdk.util;
 
+import com.wdk.pojo.GenderEnum;
 import com.wdk.pojo.UserLevel;
 
 import java.util.Scanner;
@@ -12,9 +13,21 @@ import java.util.Scanner;
  */
 public class CheckInput {
 
-    private static String ERROR_INPUT = "【\u26A0】输入错误，请重新输入！";
-    private static String IN_ENTER = "请输入您的选择：";
+    public static final String ERROR_INPUT = "【\u26A0】输入错误，请重新输入！";
+    public static final String IN_ENTER = "请输入您的选择：";
     private static String RE_ENTER = "请重新输入：";
+
+    private String check_Input() {
+
+        System.out.print(IN_ENTER);
+        String input = new Scanner(System.in).nextLine();
+        while (input.length() == 0) {
+            System.out.println(ERROR_INPUT);
+            System.out.print(RE_ENTER);
+            input = new Scanner(System.in).nextLine();
+        }
+        return input;
+    }
 
     /**
      * @param menu 菜单模块的编号
@@ -24,18 +37,42 @@ public class CheckInput {
      **/
     public int check_Menu_Input(String menu) {
         int result = 0;
-        System.out.print(IN_ENTER);
-        String input = new Scanner(System.in).nextLine();
-        while (input.length() == 0) {
-            System.out.println(ERROR_INPUT);
-            System.out.print(RE_ENTER);
-            input = new Scanner(System.in).nextLine();
-        }
+        String input = check_Input();
+
         switch (menu) {
             case "menu0":
                 result = check_Value_Input(input, '3');
                 break;
             case "menu1":
+                result = check_Value_Input(input, '4');
+                break;
+        }
+        return result;
+    }
+
+    /**
+     * @Author: Windok
+     * @Description:    检查首页用户输入的值是否符合当前菜单模块输入要求
+     * @param userLevel 用户等级
+     * @return int
+     **/
+    public int check_Front_Page_Input(UserLevel userLevel) {
+        int result = 0;
+
+        String input = check_Input();
+
+        switch (userLevel) {
+            case GUEST:
+                result = check_Value_Input(input, '3');
+                break;
+            case USER:
+                result = check_Value_Input(input, '4');
+                break;
+            case AUTHOR:
+                result = check_Value_Input(input, '4');
+                break;
+            case ADMIN:
+            case SUPER_ADMIN:
                 result = check_Value_Input(input, '4');
                 break;
         }
@@ -116,32 +153,4 @@ public class CheckInput {
         }
     }
 
-
-    public int check_Front_Menu_Input(UserLevel level) {
-        int result = 0;
-        System.out.print(IN_ENTER);
-        String input = new Scanner(System.in).nextLine();
-        while (input.length() == 0) {
-            System.out.println(ERROR_INPUT);
-            System.out.print(RE_ENTER);
-            input = new Scanner(System.in).nextLine();
-        }
-        switch (level) {
-            case GUEST:
-                result = check_Value_Input(input, '1');
-                break;
-            case USER:
-                result = check_Value_Input(input, '2');
-                break;
-            case AUTHOR:
-                result = check_Value_Input(input, '4');
-                break;
-            case ADMIN:
-            case SUPER_ADMIN:
-                result = check_Value_Input(input, '4');
-                break;
-        }
-        return result;
-
-    }
 }

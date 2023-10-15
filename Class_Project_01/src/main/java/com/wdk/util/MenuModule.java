@@ -95,4 +95,15 @@ public class MenuModule {
         draw_Line(2);
     }
 
+    public void reviseUserInfo_Menu(){
+        draw_Line(2);
+        System.out.println("\t\t\t\t【修改个人信息】");
+        System.out.println("\t\t\t\t【1】修改昵称");
+        System.out.println("\t\t\t\t【2】修改性别");
+        System.out.println("\t\t\t\t【3】修改邮箱");
+        System.out.println("\t\t\t\t【4】修改手机号");
+        System.out.println("\t\t\t\t【0】返回上一级");
+        draw_Line(2);
+    }
+
 }
