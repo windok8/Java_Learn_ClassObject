@@ -41,6 +41,7 @@ public class UserController {
                     break;
                 //  修改密码
                 case 3:
+
                     break;
                 //  注销账号
                 case 4:
@@ -68,11 +69,12 @@ public class UserController {
         System.out.println(menuModule.DELIMITER_1);
         System.out.println("\t\t\t\t【个人信息】");
         System.out.println("\t\t\t\t用户昵称：" + account.getUser().getUserName());
-        System.out.println("\t\t\t\t用户级别：" + account.getUserLevel());
-        System.out.println("\t\t\t\t用户性别：" + account.getUser().getGender());
+        System.out.println("\t\t\t\t用户级别：" + account.getUserLevel().getDescription());
+        System.out.println("\t\t\t\t用户性别：" + account.getUser().getGender().getDescription());
         System.out.println("\t\t\t\t用户邮箱：" + account.getUser().getEmail());
         System.out.println("\t\t\t\t联系方式：" + account.getUser().getPhone());
         System.out.println("\t\t\t\t注册时间：" + dateFormat.format(account.getCreateTime()));
+        System.out.println("\t\t\t\t最后登录时间：" + dateFormat.format(account.getLastLoginTime()));
         System.out.println(menuModule.DELIMITER_1);
         System.out.println();
     }

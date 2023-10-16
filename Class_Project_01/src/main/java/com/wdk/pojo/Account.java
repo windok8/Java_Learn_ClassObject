@@ -7,6 +7,7 @@ import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentStyle;
 import com.wdk.util.UniqueIDGenerator;
 import com.wdk.util.UserLevelConverter;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,6 +22,7 @@ import java.util.Random;
  * @version: 1.0
  */
 @Data
+@AllArgsConstructor
 @ContentStyle(fillForegroundColor = 10)
 public class Account implements Serializable {
 
@@ -56,12 +58,9 @@ public class Account implements Serializable {
         this.lastLoginTime = new Date();
     }
 
-    public Account(Integer id, String username, String password, UserLevel userLevel, Date createTime, Date lastLoginTime) {
-        this.id = (new Random().nextInt(999 - 100 + 1) + 100) * 1000 + UniqueIDGenerator.generateUniqueNumber();
-        this.username = username;
-        this.password = password;
-        this.userLevel = userLevel;
-        this.createTime = createTime;
-        this.lastLoginTime = lastLoginTime;
+    public Account(int id){
+        this.id = id;
     }
+
+
 }

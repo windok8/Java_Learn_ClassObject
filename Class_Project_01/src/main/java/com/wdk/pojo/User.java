@@ -25,9 +25,9 @@ public class User implements Serializable {
     private String realName;
     @ExcelProperty(value = "性别", converter = GenderConverter.class)
     private GenderEnum gender;
-    @ExcelProperty(value = "手机号")
-    private String email;
     @ExcelProperty(value = "邮箱")
+    private String email;
+    @ExcelProperty(value = "手机号")
     private String phone;
 
 

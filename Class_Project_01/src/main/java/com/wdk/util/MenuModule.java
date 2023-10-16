@@ -72,8 +72,8 @@ public class MenuModule {
                 System.out.println("\t\t\t\t【4】发布菜谱");
             }
             if (level == UserLevel.ADMIN || level == UserLevel.SUPER_ADMIN){
-                System.out.println("\t\t\t\t【3】查看所有菜谱");
-                System.out.println("\t\t\t\t【4】查看所有用户");
+                System.out.println("\t\t\t\t【3】查看所有菜谱信息");
+                System.out.println("\t\t\t\t【4】查看所有用户信息");
             }
         }
         System.out.println("\t\t\t\t【0】登出");

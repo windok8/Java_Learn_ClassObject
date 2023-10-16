@@ -24,7 +24,7 @@ public class CookBook implements Serializable {
 
     @ExcelProperty(value = "菜品ID")
     private Integer cookID;
-    @ExcelProperty(value = "菜品名称")
+    @ExcelProperty(value = "菜谱标题")
     private String title;
     @ExcelProperty(value = "菜谱作者ID")
     private Integer uid;
@@ -47,9 +47,7 @@ public class CookBook implements Serializable {
     private List<String> materials;
     @ColumnWidth(50)
     @ExcelProperty(value = "制作步骤")
-    private List<String> steps;
-    @ExcelProperty(value = "评论数据")
-    private List<Integer> commitIDList;
+    private int steps;
 
     //  创建 CookBook 对象时，自动生成一个 3 位数的 cookID 且首位不能为 0
     public CookBook() {

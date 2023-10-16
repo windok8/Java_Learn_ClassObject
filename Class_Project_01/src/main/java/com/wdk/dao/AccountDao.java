@@ -10,8 +10,8 @@ import com.wdk.pojo.Account;
  */
 public interface AccountDao {
 
-    int addAccount(Account account);
 
+    int checkAccount(String username, String password);
 
-
+    Account getAccountById(int id);
 }

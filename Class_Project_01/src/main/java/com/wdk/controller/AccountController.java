@@ -34,6 +34,7 @@ public class AccountController {
             userPassword = scanner.nextLine();
             account_ID = accountService.checkAccount(userName, userPassword);
             if (account_ID != -1) {
+                System.out.println("IF != 1" + account_ID);
                 return accountService.getAccountById(account_ID);
             }
             System.out.println("【\u26A0】用户名或密码错误，请重新输入！您还有【" + (3 - index) + "】次机会！");
@@ -123,7 +124,7 @@ public class AccountController {
         String email = null;
         String phone = null;
 
-        while (true){
+        while (true) {
 
             System.out.println("\t\t\t请输入个人信息：");
             System.out.println();
@@ -176,10 +177,16 @@ public class AccountController {
         System.out.println("请输入您的性别：【1 - 男|2 - 女|0 - 保密】");
         String input = scanner.nextLine();
         int i = checkInput.check_Value_Input(input, '2');
-        switch (i){
-            case 0:genderEnum = GenderEnum.UNKNOWN;break;
-            case 1:genderEnum = GenderEnum.MAN;break;
-            case 2:genderEnum = GenderEnum.WOMAN;break;
+        switch (i) {
+            case 0:
+                genderEnum = GenderEnum.UNKNOWN;
+                break;
+            case 1:
+                genderEnum = GenderEnum.MAN;
+                break;
+            case 2:
+                genderEnum = GenderEnum.WOMAN;
+                break;
         }
         return genderEnum;
     }
@@ -195,7 +202,7 @@ public class AccountController {
     private User writeVisitorInfo(Account account) {
         String email = null;
         String phone = null;
-        while (true){
+        while (true) {
             System.out.println("\t\t\t请输入游客信息：");
             System.out.println();
             System.out.print("请输入您的电子邮箱：");
@@ -229,5 +236,9 @@ public class AccountController {
         }
 
         return account.getUser();
+    }
+
+    public void showAllAccount() {
+
     }
 }

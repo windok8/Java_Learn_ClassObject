@@ -122,16 +122,19 @@ public class SystemController {
                 break;
                 //  发布菜谱
                 case 4: {
+                    cookBookController.writeCookBook(account.getId());
                     System.out.println("发布菜谱");
                 }
                 break;
                 //  查看所有菜谱
                 case 5: {
-                    System.out.println("查看所有菜谱");
+                    cookBookController.showAllCookBook_Admin();
+                    System.out.println("查看所有菜谱信息");
                 }
                 break;
                 //  查看所有用户
                 case 6: {
+                    accountController.showAllAccount();
                     System.out.println("查看所有用户");
                 }
                 break;

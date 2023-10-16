@@ -1,5 +1,6 @@
 package com.wdk.service.impl;
 
+import com.wdk.pojo.CookBook;
 import com.wdk.service.CookBookService;
 
 /**
@@ -9,4 +10,8 @@ import com.wdk.service.CookBookService;
  * @version: 1.0
  */
 public class CookBookServiceImpl implements CookBookService {
+    @Override
+    public CookBook getcookBookById(Integer integer) {
+        return null;
+    }
 }
