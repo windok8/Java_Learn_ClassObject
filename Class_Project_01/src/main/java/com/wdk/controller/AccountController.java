@@ -54,12 +54,10 @@ public class AccountController {
         while (true) {
             System.out.println("\t\t\t请输入用户名和密码：");
             System.out.println();
-
             userName = getUserName();
+            //  TODO:   检查用户名是否可用
             System.out.println("用户名可用！");
-
             userPassword = getPassword();
-
             System.out.println(MenuModule.DELIMITER_1);
             System.out.println("\t\t请确认您的账号信息：");
             System.out.println("\t用户名：" + userName);
@@ -71,7 +69,6 @@ public class AccountController {
             System.out.println("\t0.返回上一级");
             System.out.println(MenuModule.DELIMITER_1);
             System.out.print("请输入您的选择：");
-
             String input = scanner.nextLine();
             int i = checkInput.check_Value_Input(input, '2');
             if (i == 0) {
@@ -87,6 +84,7 @@ public class AccountController {
             }
         }
         account.setUser(writeUserInfo(account));
+        accountService.insertAccount(account);
         return account;
     }
 
@@ -128,7 +126,7 @@ public class AccountController {
 
             System.out.println("\t\t\t请输入个人信息：");
             System.out.println();
-            System.out.println("请输入您的昵称：");
+            System.out.print("请输入您的昵称：");
             userName = scanner.nextLine();
             //  TODO:   检查用户名是否可用
             System.out.print("请输入您的真实姓名：");
@@ -159,6 +157,7 @@ public class AccountController {
                 System.out.println("取消注册");
                 return null;
             } else if (i == 1) {
+                account.getUser().setUserName(userName);
                 account.getUser().setRealName(realNmae);
                 account.getUser().setGender(genderEnum);
                 account.getUser().setEmail(email);

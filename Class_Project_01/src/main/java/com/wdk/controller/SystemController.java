@@ -4,6 +4,8 @@ import com.wdk.pojo.Account;
 import com.wdk.util.CheckInput;
 import com.wdk.util.MenuModule;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -25,6 +27,7 @@ public class SystemController {
     private static Boolean LOGIN_STATUS = false;
     private static Boolean REGISTER_STATUS = false;
     private static int REGISTER_NUMBER = 1;
+    private static int LOGIN_NUMBER = 1;
 
 
     static {
@@ -55,8 +58,11 @@ public class SystemController {
                     }
                     Account account = accountController.login();
                     if (account == null) {
-                        this.LOGIN_STATUS = true;
-                        write_Limit("登录");
+                        if (LOGIN_NUMBER++ > 3) {
+                            this.LOGIN_STATUS = true;
+                            write_Limit("登录");
+                            break;
+                        }
                         break;
                     } else {
                         this.LOGIN_STATUS = false;
@@ -66,8 +72,7 @@ public class SystemController {
                 break;
                 //  注册
                 case 2: {
-                    REGISTER_NUMBER++;
-                    if (REGISTER_NUMBER > 3) {
+                    if (REGISTER_NUMBER++ > 3) {
                         write_Limit("注册");
                         break;
                     }
@@ -79,7 +84,6 @@ public class SystemController {
                 }
                 //  游览
                 case 3: {
-
                     frontPage(accountController.visitor_register());
                 }
                 //  退出系统
@@ -110,14 +114,16 @@ public class SystemController {
                 //  查看个人信息
                 case 2: {
 
-                    userController.userInfo(account.getId());
+                    if(userController.userInfo(account.getId()) == 1) return;
                     System.out.println("查看个人信息【Over】");
                 }
                 break;
                 //  查看我的菜谱
                 case 3: {
-                    cookBookController.showMyCookBook(account.getId());
-                    System.out.println("查看我的菜谱");
+                    showMyCookBook(account);
+
+                    System.out.println("查看我的菜谱【Over】");
+                    frontPage(account);
                 }
                 break;
                 //  发布菜谱
@@ -146,6 +152,30 @@ public class SystemController {
                 break;
             }
         }
+    }
+
+    private void showMyCookBook(Account account) {
+        if (account.getCookBookIDs() == null) {
+            if (account.getIsFindCookBook()) {
+                System.out.println("您还没有发布过菜谱哦！");
+                return;
+            }
+            //  通过accountID获取自己的所有菜谱ID
+            account = cookBookController.getSelfCookBookIDs(account);
+            showMyCookBook(account);
+        }
+        List<Integer> cookBookIDs = account.getCookBookIDs();
+        for (int i = 0; i < cookBookIDs.size(); i++) {
+            System.out.println(
+                    "菜谱名称：" + account.getCookBooksMap().get(cookBookIDs.get(i)).get(0) +
+                    "\t\t菜谱状态：" + account.getCookBooksMap().get(cookBookIDs.get(i)).get(1) +
+                    "\t\t创作时间：" + account.getCookBooksMap().get(cookBookIDs.get(i)).get(2));
+        }
+        //  任意按键继续
+        System.out.println("任意按键继续");
+        scanner.next();
+
+
     }
 
 

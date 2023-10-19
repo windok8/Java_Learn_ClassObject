@@ -53,10 +53,6 @@ public class UserController {
             System.out.print("请输入密码：");
             password = scanner.next();
         }
-        //  TODO:   登录成功后 需要进行获取 输出用户信息
-//        System.out.println("登录成功！");
-//        this.account_Index = index;
-//        this.account_Now = DataHolder.getAccountList().get(index);
     }
 
     public void register() throws InterruptedException {
@@ -83,7 +79,6 @@ public class UserController {
                     System.out.print("请再次输入密码：");
                 }
             }
-
             System.out.println("请确认您的账号信息：");
             System.out.println("用户名：" + username);
             System.out.println("密码：" + password);

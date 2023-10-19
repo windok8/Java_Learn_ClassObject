@@ -27,4 +27,7 @@ public interface AccountService {
     Account getAccountById(int id);
 
     boolean getAccountByUsername(String username);
+
+    void insertAccount(Account account);
+    int updatePassword(int accountID, String newPassword);
 }

@@ -1,9 +1,9 @@
 package com.wdk.dao.impl;
 
-import com.wdk.dao.UserDao;
+import com.wdk.dao.CookBookDao;
 import com.wdk.pojo.Account;
-import com.wdk.pojo.GenderEnum;
-import com.wdk.pojo.User;
+import com.wdk.pojo.CookBook;
+import com.wdk.pojo.RecipeStatus;
 import com.wdk.pojo.UserLevel;
 import com.wdk.util.RecipeSystemConnectionPool;
 
@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author : Windok
@@ -18,29 +20,29 @@ import java.sql.SQLException;
  * @Description:
  * @version: 1.0
  */
-public class UserDaoImpl implements UserDao {
+public class CookBookDaoImpl implements CookBookDao {
+
     @Override
-    public User getUserById(int id) {
+    public CookBook getCookBookByRecipeID(int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        UserLevel userGender = null;
-        User user = new User();
+        CookBook cookBook = new CookBook(id);
         try {
             connection = RecipeSystemConnectionPool.getConnection();
-            String sql = "SELECT * FROM user WHERE id = ?";
+            String sql = "SELECT * FROM recipe WHERE id = ?";
             preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
             preparedStatement.setObject(1, id);
             //执行CURD
             resultSet = preparedStatement.executeQuery();// 这里不需要再传入SQL语句
             if (resultSet.next()) {
-                user.setUserName(resultSet.getString("username"));
-                user.setRealName(resultSet.getString("realname"));
-                user.setGender(GenderEnum.valueOf(resultSet.getString("gender")));
-                user.setPhone(resultSet.getString("phone"));
-                user.setEmail(resultSet.getString("email"));
+                cookBook.setTitle(resultSet.getString("title"));
+                cookBook.setDescription(resultSet.getString("description"));
+                cookBook.setLikes(resultSet.getInt("likes"));
+                cookBook.setCreateTime(resultSet.getDate("createtime"));
+                cookBook.setUpdateTime(resultSet.getDate("updatetime"));
             }
-            return user;
+            return cookBook;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -70,34 +72,42 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int insertUser(int id,User user) {
+    public Map<Integer, RecipeStatus> getAccountAndRecipeByuID(int id) {
         Connection connection = null;
-        PreparedStatement preparedStatement=null;
-        int rows=0;
-        try{
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Map<Integer, RecipeStatus> recipeStatusMap = new HashMap<>();
+        try {
             connection = RecipeSystemConnectionPool.getConnection();
-            String sql="insert into user values(?,?,?,?,?,?)";
+            String sql = "SELECT recipe_id, status FROM account_recipe WHERE account_id = ?";
             preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
-            //设置参数
-            preparedStatement.setObject(1,id);
-            preparedStatement.setObject(2,user.getUserName());
-            preparedStatement.setObject(3,user.getRealName());
-            preparedStatement.setObject(4,user.getGender().name());
-            preparedStatement.setObject(5,user.getPhone());
-            preparedStatement.setObject(6,user.getEmail());
+            preparedStatement.setObject(1, id);
             //执行CURD
-            rows =preparedStatement.executeUpdate();// 这里不需要再传入SQL语句
-        }catch (Exception e){
+            resultSet = preparedStatement.executeQuery();// 这里不需要再传入SQL语句
+            if (resultSet.next()) {
+                int recipe_id = resultSet.getInt("recipe_id");
+                RecipeStatus status = RecipeStatus.valueOf(resultSet.getString("status"));
+                recipeStatusMap.put(recipe_id, status);
+            }
+            return recipeStatusMap;
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if(null != preparedStatement){
+        } finally {
+            if (null != resultSet) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != preparedStatement) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if(null != connection){
+            if (null != connection) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
@@ -105,6 +115,6 @@ public class UserDaoImpl implements UserDao {
                 }
             }
         }
-        return rows;
+        return null;
     }
 }

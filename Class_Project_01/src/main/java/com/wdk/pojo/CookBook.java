@@ -10,6 +10,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -26,10 +27,6 @@ public class CookBook implements Serializable {
     private Integer cookID;
     @ExcelProperty(value = "菜谱标题")
     private String title;
-    @ExcelProperty(value = "菜谱作者ID")
-    private Integer uid;
-    @ExcelProperty(value = "菜谱作者")
-    private String author;
     @ExcelProperty(value = "菜品描述")
     private String description;
     @ExcelProperty(value = "作品点赞")
@@ -44,14 +41,23 @@ public class CookBook implements Serializable {
     private Date updateTime;
     @ColumnWidth(50)
     @ExcelProperty(value = "准备材料")
-    private List<String> materials;
+    private Map<String,String> materials;
     @ColumnWidth(50)
     @ExcelProperty(value = "制作步骤")
     private int steps;
+    private RecipeStatus status;
+    private List<Comment> comments;
 
     //  创建 CookBook 对象时，自动生成一个 3 位数的 cookID 且首位不能为 0
     public CookBook() {
         this.cookID = (new Random().nextInt(999 - 100 + 1) + 100) * 1000 + UniqueIDGenerator.generateUniqueNumber();
+        this.status = RecipeStatus.PENDING;
+        this.createTime = new Date();
+        this.updateTime = new Date();
+    }
+
+    public CookBook(Integer id){
+        this.cookID = id;
     }
 
 

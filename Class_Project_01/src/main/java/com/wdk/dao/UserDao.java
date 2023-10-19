@@ -12,4 +12,6 @@ public interface UserDao {
 
 
     User getUserById(int id);
+
+    int insertUser(int id, User user);
 }

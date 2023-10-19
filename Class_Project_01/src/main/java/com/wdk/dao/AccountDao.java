@@ -14,4 +14,7 @@ public interface AccountDao {
     int checkAccount(String username, String password);
 
     Account getAccountById(int id);
+
+    int insertAccount(Account account);
+    int updatePassword(int accountID, String newPassword);
 }

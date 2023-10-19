@@ -81,17 +81,15 @@ public class AccountDaoImpl extends BaseDao implements AccountDao {
             if (resultSet.next()) {
                 account.setUsername(resultSet.getString("username"));
                 account.setPassword(resultSet.getString("password"));
-                account.setUserLevel(
-                        resultSet.getString("userlevel").equals("SUPER_ADMIN") ? UserLevel.SUPER_ADMIN :
-                                resultSet.getString("userlevel").equals("ADMIN") ? UserLevel.ADMIN :
-                                        resultSet.getString("userlevel").equals("AUTHOR") ? UserLevel.AUTHOR :
-                                                resultSet.getString("userlevel").equals("USER") ? UserLevel.USER :
-                                                        UserLevel.GUEST
-                );
-                System.out.println(account.getUserLevel().getDescription());
+                String userLevel = resultSet.getString("userlevel");
+                account.setUserLevel(UserLevel.valueOf(userLevel));
                 account.setCreateTime(resultSet.getDate("createtime"));
                 account.setLastLoginTime(resultSet.getDate("lastlogintime"));
+                if(resultSet.getBoolean("is_deleted")){
+                    return null;
+                }
             }
+
             return account;
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,5 +117,79 @@ public class AccountDaoImpl extends BaseDao implements AccountDao {
             }
         }
         return null;
+    }
+
+    @Override
+    public int insertAccount(Account account) {
+        Connection connection = null;
+        PreparedStatement preparedStatement=null;
+        int rows=0;
+        try{
+            connection = RecipeSystemConnectionPool.getConnection();
+            String sql="insert into account(id,username,password,userlevel,createtime,lastlogintime) values(?,?,?,?,?,?)";
+            preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
+            //设置参数
+            preparedStatement.setObject(1,account.getId());
+            preparedStatement.setObject(2,account.getUsername());
+            preparedStatement.setObject(3,account.getPassword());
+            preparedStatement.setObject(4,account.getUserLevel().name());
+            preparedStatement.setObject(5,account.getCreateTime());
+            preparedStatement.setObject(6,account.getLastLoginTime());
+            //执行CURD
+            rows =preparedStatement.executeUpdate();// 这里不需要再传入SQL语句
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(null != preparedStatement){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(null != connection){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return rows;
+    }
+
+    @Override
+    public int updatePassword(int accountID, String newPassword) {
+        Connection connection = null;
+        PreparedStatement preparedStatement=null;
+        int rows=0;
+        try{
+            connection = RecipeSystemConnectionPool.getConnection();
+            String sql="update account set password = ? where id = ?";
+            preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
+            //设置参数
+            preparedStatement.setObject(1,newPassword);
+            preparedStatement.setObject(2,accountID);
+            //执行CURD
+            rows =preparedStatement.executeUpdate();// 这里不需要再传入SQL语句
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(null != preparedStatement){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(null != connection){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return rows;
     }
 }

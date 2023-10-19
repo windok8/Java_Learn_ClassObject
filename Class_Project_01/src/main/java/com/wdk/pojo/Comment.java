@@ -15,22 +15,25 @@ import java.util.Random;
  * @version: 1.0
  */
 @Data
-public class Commit implements Serializable {
+public class Comment implements Serializable {
 
     @ExcelProperty(value = "评论ID")
     private Integer cid;
+    @ExcelProperty(value = "菜谱ID")
+    private Integer cookID;
+    @ExcelProperty(value = "评论者ID")
+    private Integer uid;
     @ExcelProperty(value = "评论内容")
     private String content;
     @ExcelProperty(value = "评论时间")
     private Date createTime;
-    @ExcelProperty(value = "评论用户ID")
-    private Integer uid;
-    @ExcelProperty(value = "评论点赞数")
-    private Integer likes;
 
-    public Commit() {
+    public Comment() {
         int randomNumber = (new Random().nextInt(999 - 100 + 1) + 100) * 1000 + UniqueIDGenerator.generateUniqueNumber();
+    }
 
+    public Comment(Integer cid) {
+        this.cid = cid;
     }
 
 

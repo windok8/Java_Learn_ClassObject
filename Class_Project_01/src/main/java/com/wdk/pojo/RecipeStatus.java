@@ -2,19 +2,19 @@ package com.wdk.pojo;
 
 /**
  * @author : Windok
- * @date: 2023-10-03
+ * @date: 2023-10-17
  * @Description:
  * @version: 1.0
  */
-public enum GenderEnum {
+public enum RecipeStatus {
 
-    MAN("男"),
-    WOMAN("女"),
-    UNKNOWN("保密");
+    APPROVED("审核通过"),
+    PENDING("审核中"),
+    REJECTED("审核未通过");
 
-    private final String description;
+    private String description;
 
-    GenderEnum(String description) {
+    RecipeStatus(String description) {
         this.description = description;
     }
 

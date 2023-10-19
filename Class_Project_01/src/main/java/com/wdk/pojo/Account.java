@@ -11,9 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author : Windok
@@ -45,20 +43,24 @@ public class Account implements Serializable {
     private Date lastLoginTime;
     @ColumnWidth(23)
     @ExcelProperty(value = "菜谱数据")
-    private List<Integer> cookIDList;
+    private Map<Integer, List<String>> cookBooksMap;
     @ExcelIgnore
+    List<Integer> cookBookIDs;
     private User user;
+    private List<CookBook> cookBooks;
+    private Boolean isFindCookBook = false;
 
 
     public Account() {
         this.id = (new Random().nextInt(999 - 100 + 1) + 100) * 1000 + UniqueIDGenerator.generateUniqueNumber();
         User user = new User();
         this.user = user;
+        this.userLevel = UserLevel.USER;
         this.createTime = new Date();
         this.lastLoginTime = new Date();
     }
 
-    public Account(int id){
+    public Account(int id) {
         this.id = id;
     }
 

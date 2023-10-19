@@ -24,7 +24,7 @@ public class UserController {
     AccountServiceImpl accountService = new AccountServiceImpl();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日");
 
-    public void userInfo(int accountID) throws InterruptedException {
+    public int userInfo(int accountID) throws InterruptedException {
 
         while (true) {
             menuModule.waitToMenu("个人信息控制台");
@@ -41,20 +41,66 @@ public class UserController {
                     break;
                 //  修改密码
                 case 3:
-
+                    changePassword(accountID);
                     break;
                 //  注销账号
                 case 4:
-                    break;
-                    //  返回上一级
+                   if(logoutAccount(accountID)) return 1;
+                    break ;
+                //  返回上一级
                 case 0: {
                     System.out.println();
-                    return;
+                    return 0;
                 }
             }
         }
 
 
+    }
+
+    private Boolean logoutAccount(int accountID) {
+        //  注销账号
+        System.out.println("您确定要注销账号吗？（Y/N）");
+        String s = scanner.nextLine();
+        if (s.equals("Y")) {
+            accountService.deleteAccount(accountID);
+            System.out.println("账号注销成功！");
+            System.out.println("按任意键返回登录界面...");
+            new Scanner(System.in).nextLine();
+            System.out.println();
+            System.out.println();
+            return true;
+        }
+        return false;
+    }
+
+    private void changePassword(int accountID) {
+        //  输入原密码
+        System.out.print("请输入原密码：");
+        String oldPassword = scanner.nextLine();
+        String newPassword = getPassword();
+        //  判断原密码是否正确
+        Account account = accountService.getAccountById(accountID);
+        if (!account.getPassword().equals(oldPassword)) {
+            System.out.println("原密码错误！");
+            return;
+        }
+        accountService.updatePassword(accountID, newPassword);
+    }
+
+    private String getPassword() {
+        System.out.print("请输入密码：");
+        String password = scanner.nextLine();
+        System.out.print("请再次输入密码：");
+        while (true) {
+            String password2 = scanner.nextLine();
+            if (password.equals(password2)) {
+                return password;
+            } else {
+                System.out.println("两次密码不一致，请再次输入！");
+                System.out.print("请再次输入密码：");
+            }
+        }
     }
 
     private void reviseUserInfo(int accountID) {
@@ -64,7 +110,7 @@ public class UserController {
         int i = checkInput.check_Menu_Input("menu2");
     }
 
-    private void displayUserInfo(Account account){
+    private void displayUserInfo(Account account) {
         System.out.println();
         System.out.println(menuModule.DELIMITER_1);
         System.out.println("\t\t\t\t【个人信息】");
