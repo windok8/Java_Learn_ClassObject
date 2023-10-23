@@ -32,4 +32,25 @@ public class CookBookServiceImpl implements CookBookService {
     }
 
 
+    @Override
+    public int modifyDescription(int id, String description) {
+        cookBookDao.modifyRecipeStatus(id);
+        if (cookBookDao.modifyContent(id, description, 2) == 1) return 1;
+        return 0;
+    }
+
+    @Override
+    public int deleteRecipe(int id) {
+        if (cookBookDao.deleteRecipe(id)) return 1;
+        return 0;
+    }
+
+    @Override
+    public int modifyTitle(int id, String title) {
+        cookBookDao.modifyRecipeStatus(id);
+        if (cookBookDao.modifyContent(id, title, 1) == 1) return 1;
+        return 0;
+    }
+
+
 }

@@ -114,7 +114,7 @@ public class SystemController {
                 //  查看个人信息
                 case 2: {
 
-                    if(userController.userInfo(account.getId()) == 1) return;
+                    if (userController.userInfo(account.getId()) == 1) return;
                     System.out.println("查看个人信息【Over】");
                 }
                 break;
@@ -132,7 +132,7 @@ public class SystemController {
                     System.out.println("发布菜谱");
                 }
                 break;
-                //  查看所有菜谱
+                //  ADMIN - - 查看所有菜谱
                 case 5: {
                     cookBookController.showAllCookBook_Admin();
                     System.out.println("查看所有菜谱信息");
@@ -154,26 +154,36 @@ public class SystemController {
         }
     }
 
-    private void showMyCookBook(Account account) {
-        if (account.getCookBookIDs() == null) {
-            if (account.getIsFindCookBook()) {
-                System.out.println("您还没有发布过菜谱哦！");
-                return;
+    private void showMyCookBook(Account account) throws InterruptedException {
+        account = cookBookController.showMyCookBook(account);
+        if (account == null) return;
+        while (true) {
+            menuModule.waitToMenu("个人菜谱控制台");
+            menuModule.recipePersonal_Menu();
+            System.out.print("请输入您的选择：");
+            int i = checkInput.check_Value_Input(scanner.nextLine(), '3');
+            switch (i) {
+                case 1: {
+                    cookBookController.showSelfRecipe(account);
+                    System.out.println("查看菜谱【Over】");
+                }
+                break;
+                case 2: {
+                    account = cookBookController.reviseRecipe(account);
+                    System.out.println("修改菜谱【Over】");
+                }
+                break;
+                case 3: {
+                    account = cookBookController.deleteRecipe(account);
+                    System.out.println("删除菜谱【Over】");
+                }
+                break;
+                case 0: {
+                    frontPage(account);
+                }
+                break;
             }
-            //  通过accountID获取自己的所有菜谱ID
-            account = cookBookController.getSelfCookBookIDs(account);
-            showMyCookBook(account);
         }
-        List<Integer> cookBookIDs = account.getCookBookIDs();
-        for (int i = 0; i < cookBookIDs.size(); i++) {
-            System.out.println(
-                    "菜谱名称：" + account.getCookBooksMap().get(cookBookIDs.get(i)).get(0) +
-                    "\t\t菜谱状态：" + account.getCookBooksMap().get(cookBookIDs.get(i)).get(1) +
-                    "\t\t创作时间：" + account.getCookBooksMap().get(cookBookIDs.get(i)).get(2));
-        }
-        //  任意按键继续
-        System.out.println("任意按键继续");
-        scanner.next();
 
 
     }

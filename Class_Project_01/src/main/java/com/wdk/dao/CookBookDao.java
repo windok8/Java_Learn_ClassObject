@@ -18,4 +18,11 @@ public interface CookBookDao {
 
 
     Map<Integer, RecipeStatus> getAccountAndRecipeByuID(int id);
+
+
+    int modifyRecipeStatus(int id);
+
+    boolean deleteRecipe(int id);
+
+    int modifyContent(int id, String content, int recipe_columns);
 }

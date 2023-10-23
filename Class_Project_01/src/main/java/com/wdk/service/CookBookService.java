@@ -15,4 +15,9 @@ public interface CookBookService {
     CookBook getcookBookById(int cookBookID);
 
     Map<Integer, RecipeStatus> getAccountAndRecipeByuID(int id);
+
+    int deleteRecipe(int id);
+
+    int modifyDescription(int id, String title);
+    int modifyTitle(int id, String title);
 }

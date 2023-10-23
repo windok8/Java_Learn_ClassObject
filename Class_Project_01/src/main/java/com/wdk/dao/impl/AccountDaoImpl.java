@@ -78,7 +78,7 @@ public class AccountDaoImpl extends BaseDao implements AccountDao {
             preparedStatement.setObject(1, id);
             //执行CURD
             resultSet = preparedStatement.executeQuery();// 这里不需要再传入SQL语句
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 account.setUsername(resultSet.getString("username"));
                 account.setPassword(resultSet.getString("password"));
                 String userLevel = resultSet.getString("userlevel");

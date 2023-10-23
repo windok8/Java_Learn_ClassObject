@@ -32,7 +32,7 @@ public class CommentDaoImpl implements CommentDao {
             preparedStatement.setObject(1, cookBookID);
             //执行CURD
             resultSet = preparedStatement.executeQuery();// 这里不需要再传入SQL语句
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Comment comment = new Comment(resultSet.getInt("comment_id"));
                 comment.setCid(resultSet.getInt("recipe_id"));
                 comment.setUid(resultSet.getInt("user_id"));

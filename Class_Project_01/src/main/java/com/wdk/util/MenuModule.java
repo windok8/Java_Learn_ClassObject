@@ -13,6 +13,7 @@ public class MenuModule {
 
     public static final String DELIMITER_1 = "--------------------------------------------------";
     public static final String DELIMITER_2 = "==================================================";
+    public static final String DELIMITER_3 = "##################################################";
 
     private void draw_Line(int i) {
         if (i == 1) System.out.println(DELIMITER_1);
@@ -105,5 +106,27 @@ public class MenuModule {
         System.out.println("\t\t\t\t【0】返回上一级");
         draw_Line(2);
     }
+
+    public void recipePersonal_Menu(){
+        draw_Line(2);
+        System.out.println("\t\t\t\t【个人菜谱控制台】");
+        System.out.println("\t\t\t\t【1】查看我的菜谱");
+        System.out.println("\t\t\t\t【2】修改我的菜谱");
+        System.out.println("\t\t\t\t【3】删除我的菜谱");
+        System.out.println("\t\t\t\t【0】返回上一级");
+        draw_Line(2);
+    }
+
+    public void reviseRecipe_Menu(){
+        draw_Line(2);
+        System.out.println("\t\t\t\t【菜谱信息修改】");
+        System.out.println("\t\t\t\t【1】修改菜谱标题");
+        System.out.println("\t\t\t\t【2】修改菜谱描述");
+        System.out.println("\t\t\t\t【3】修改准备材料");
+        System.out.println("\t\t\t\t【0】返回上一级");
+        draw_Line(2);
+    }
+
+
 
 }

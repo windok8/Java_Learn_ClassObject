@@ -43,9 +43,10 @@ public class Account implements Serializable {
     private Date lastLoginTime;
     @ColumnWidth(23)
     @ExcelProperty(value = "菜谱数据")
+    //  Integer : 菜谱ID  List<String> : 菜谱Title|菜谱Status|菜谱GreatTime
     private Map<Integer, List<String>> cookBooksMap;
     @ExcelIgnore
-    List<Integer> cookBookIDs;
+    private List<Integer> cookBookIDs;
     private User user;
     private List<CookBook> cookBooks;
     private Boolean isFindCookBook = false;
