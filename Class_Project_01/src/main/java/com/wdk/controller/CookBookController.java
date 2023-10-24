@@ -136,6 +136,62 @@ public class CookBookController {
     }
 
     public void writeCookBook(Integer id) {
+        System.out.println(MenuModule.DELIMITER_3);
+        System.out.println("\t\t\t\t【创作菜谱】");
+        System.out.println("请输入菜谱标题：");
+        String title = scanner.nextLine();
+        System.out.println("请输入菜谱描述：");
+        Map<Integer, String> recipeDescription = new HashMap<>();
+        int i = 1;
+        while (true) {
+            System.out.println("请输入第 - " + i + " - 步骤：");
+            String step = scanner.nextLine();
+            recipeDescription.put(i, step);
+            System.out.println("是否继续添加步骤？【Y/N】");
+            if ("N".equals(scanner.nextLine())) break;
+            i++;
+        }
+        System.out.println("请输入菜谱主料：");
+        List<String> main_Ingredients = new ArrayList<>();
+        while (true) {
+            System.out.println("请输入主料名称：");
+            String main_Ingredients_Name = scanner.nextLine();
+            System.out.println("请输入主料计量：");
+            String main_Ingredients_Amount = scanner.nextLine();
+            main_Ingredients.add(main_Ingredients_Name + "|" + main_Ingredients_Amount);
+            System.out.println("是否继续添加主料？【Y/N】");
+            if ("N".equals(scanner.nextLine())) break;
+        }
+        System.out.println("请输入菜谱辅料：");
+        List<String> auxiliary_Ingredients = new ArrayList<>();
+        while (true) {
+            System.out.println("请输入辅料名称：");
+            String auxiliary_Ingredients_Name = scanner.nextLine();
+            System.out.println("请输入辅料计量：");
+            String auxiliary_Ingredients_Amount = scanner.nextLine();
+            auxiliary_Ingredients.add(auxiliary_Ingredients_Name + "|" + auxiliary_Ingredients_Amount);
+            System.out.println("是否继续添加辅料？【Y/N】");
+            if ("N".equals(scanner.nextLine())) break;
+        }
+        System.out.println(MenuModule.DELIMITER_2);
+        System.out.println("\t\t\t\t【您输入的信息】");
+        System.out.println("菜谱标题：\t\t\t\t" + title);
+        System.out.println("菜谱描述：\t\t\t\t" + recipeDescription);
+        System.out.println("菜谱主料：\t\t\t\t" + main_Ingredients);
+        System.out.println("菜谱辅料：\t\t\t\t" + auxiliary_Ingredients);
+        System.out.println(MenuModule.DELIMITER_2);
+        System.out.println("您确定要发布吗？【Y/N】");
+        if ("N".equals(scanner.nextLine())) return;
+        CookBook cookBook = new CookBook();
+        cookBook.setTitle(title);
+        cookBook.setSteps(recipeDescription.size());
+        cookBook.setDescription(recipeDescription);
+        Map<String,List<String>> materials = new HashMap<>();
+        materials.put("主料",main_Ingredients);
+        materials.put("辅料",auxiliary_Ingredients);
+        cookBook.setMaterials(materials);
+        cookBookService.addRecipe(id,cookBook);
+        System.out.println(MenuModule.DELIMITER_3);
 
     }
 
@@ -217,8 +273,7 @@ public class CookBookController {
     }
 
     private Account modifyMaterials(int iRecipe, Account account) throws InterruptedException {
-        boolean isModify = true;
-        String tirle = account.getCookBooks().get(iRecipe - 1).getTitle();
+        String tirle = account.getCookBooks().get(iRecipe).getTitle();
         System.out.println("您正在修改菜谱【 " + tirle + " 】的材料");
         showRecipeMaterials(account.getCookBooks().get(iRecipe).getMaterials());
         List<String> main_Ingredients = (List<String>) account.getCookBooks().get(iRecipe).getMaterials().get("主料");
@@ -338,11 +393,11 @@ public class CookBookController {
             name = scanner.nextLine();
         }
         int index = 0;
-        for (String s : ingredients) {
-            if (s.equals(name)) {
+        for (int i = 0; i < ingredients.size(); i++) {
+            if(ingredients.get(i).split("\\|")[0].equals(name)){
+                index = i;
                 break;
             }
-            index++;
         }
         System.out.print("请输入"+Ingredients_name+"名称：");
         String auxiliaryName = scanner.nextLine();
@@ -350,7 +405,7 @@ public class CookBookController {
         String auxiliaryAmount = scanner.nextLine();
         System.out.println(MenuModule.DELIMITER_1);
         System.out.println("\t\t\t\t【修改前】");
-        System.out.println(ingredients.get(index));
+        System.out.println(ingredients.get(index).toString());
         System.out.println("\t\t\t\t【修改后】");
         System.out.println(auxiliaryName + " | " + auxiliaryAmount);
         System.out.print("您确定要修改吗？【Y/N】");
@@ -373,6 +428,13 @@ public class CookBookController {
                 case 1:
                     main_Ingredients = reviceIngredients_Info(main_Ingredients,"主料");
                     break;
+                case 2:
+                    main_Ingredients = addIngredients_Info(main_Ingredients,"主料");
+                    break;
+                case 3:
+                    main_Ingredients = deleteIngredients_Info(main_Ingredients,"主料");
+                    break;
+
                 case 0:
                     return main_Ingredients;
             }

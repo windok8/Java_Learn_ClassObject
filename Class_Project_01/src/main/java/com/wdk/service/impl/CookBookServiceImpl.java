@@ -75,5 +75,11 @@ public class CookBookServiceImpl implements CookBookService {
         return cookBookDao.getRecipe_Admin();
     }
 
+    @Override
+    public int addRecipe(int uid,CookBook cookBook) {
+        cookBookDao.addRecipe(cookBook);
+        return cookBookDao.addRecipe_Account(uid,cookBook.getCookID());
+    }
+
 
 }

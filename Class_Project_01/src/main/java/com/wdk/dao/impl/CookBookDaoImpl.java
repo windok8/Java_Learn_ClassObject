@@ -329,13 +329,89 @@ public class CookBookDaoImpl implements CookBookDao {
     }
 
     @Override
+    public int addRecipe(CookBook cookBook) {
+        Connection connection = null;
+        PreparedStatement preparedStatement=null;
+        int rows=0;
+        try{
+            connection = RecipeSystemConnectionPool.getConnection();
+            String sql="insert into recipe (id, title,description,createtime, updatetime,materials,steps) values (?, ?, ?, ?, ?,?, ?);";
+            preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
+            //设置参数
+            preparedStatement.setObject(1,cookBook.getCookID());
+            preparedStatement.setObject(2,cookBook.getTitle());
+            preparedStatement.setObject(3,cookBook.getDescription().toString());
+            preparedStatement.setObject(4,cookBook.getCreateTime());
+            preparedStatement.setObject(5,cookBook.getUpdateTime());
+            preparedStatement.setObject(6,cookBook.getMaterials().toString());
+            preparedStatement.setObject(7,cookBook.getSteps());
+            //执行CURD
+            rows =preparedStatement.executeUpdate();// 这里不需要再传入SQL语句
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(null != preparedStatement){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(null != connection){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return rows;
+    }
+
+    @Override
+    public int addRecipe_Account(int uid, int cookID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement=null;
+        int rows=0;
+        try{
+            connection = RecipeSystemConnectionPool.getConnection();
+            String sql="insert into account_recipe(account_id,recipe_id,status) values(?,?,?)";
+            preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
+            //设置参数
+            preparedStatement.setObject(1,uid);
+            preparedStatement.setObject(2,cookID);
+            preparedStatement.setObject(3,RecipeStatus.PENDING.name());
+            //执行CURD
+            rows =preparedStatement.executeUpdate();// 这里不需要再传入SQL语句
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(null != preparedStatement){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(null != connection){
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return rows;
+    }
+
+    @Override
     public int modifyRecipeStatus(int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         int rows = 0;
         try {
             connection = RecipeSystemConnectionPool.getConnection();
-            String sql = "update account_recipe set status = ? where id = ?";
+            String sql = "update account_recipe set status = ? where recipe_id = ?";
             preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
             preparedStatement.setObject(1, RecipeStatus.PENDING.name());
             preparedStatement.setObject(2, id);

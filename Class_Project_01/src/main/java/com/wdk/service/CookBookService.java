@@ -28,4 +28,5 @@ public interface CookBookService {
 
     List<CookBook> getRecipe_Admin();
 
+    int addRecipe(int uid,CookBook cookBook);
 }

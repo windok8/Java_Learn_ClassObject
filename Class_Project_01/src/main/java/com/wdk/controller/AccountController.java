@@ -8,6 +8,8 @@ import com.wdk.service.impl.AccountServiceImpl;
 import com.wdk.util.CheckInput;
 import com.wdk.util.MenuModule;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -22,6 +24,7 @@ public class AccountController {
     AccountServiceImpl accountService = new AccountServiceImpl();
 
     CheckInput checkInput = new CheckInput();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 
     public Account login() {
         String userName = null;
@@ -238,6 +241,40 @@ public class AccountController {
     }
 
     public void showAllAccount() {
+        System.out.println(MenuModule.DELIMITER_3);
+        List<Account> accountList = accountService.getAllAccount();
+        System.out.println("\t\t\t\t【共有 - "+accountList.size()+" - 个账户】");
+        System.out.println(MenuModule.DELIMITER_2);
+        for (Account account : accountList) {
 
+            System.out.println(
+                    String.format(
+                                    "账户ID: %-10s " +
+                                    "账号: %-15s " +
+                                    "密码: %-15s " +
+                                    "用户级别: %-5s " +
+                                    "创建时间: %-20s " +
+                                    "最后登录时间: %-20s\n" +
+                                    "用户昵称: %-15s " +
+                                    "真实姓名: %-15s " +
+                                    "性别: %-5s " +
+                                    "联系方式: %-15s " +
+                                    "电子邮箱: %-15s ",
+                            account.getId(),
+                            account.getUsername(),
+                            account.getPassword(),
+                            account.getUserLevel().getDescription(),
+                            dateFormat.format(account.getCreateTime()),
+                            dateFormat.format(account.getLastLoginTime()),
+                            account.getUser().getUserName(),
+                            account.getUser().getRealName(),
+                            account.getUser().getGender().getDescription(),
+                            account.getUser().getPhone(),
+                            account.getUser().getEmail()
+                    )
+            );
+            System.out.println(MenuModule.DELIMITER_2);
+        }
+        System.out.println(MenuModule.DELIMITER_3);
     }
 }

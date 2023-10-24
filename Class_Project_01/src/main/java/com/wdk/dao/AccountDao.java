@@ -2,6 +2,8 @@ package com.wdk.dao;
 
 import com.wdk.pojo.Account;
 
+import java.util.List;
+
 /**
  * @author : Windok
  * @date: 2023-10-10
@@ -17,4 +19,6 @@ public interface AccountDao {
 
     int insertAccount(Account account);
     int updatePassword(int accountID, String newPassword);
+
+    List<Account> getAllAccount();
 }

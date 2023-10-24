@@ -30,4 +30,8 @@ public interface CookBookDao {
     List<CookBook> getRecipe();
 
     List<CookBook> getRecipe_Admin();
+
+    int addRecipe(CookBook cookBook);
+
+    int addRecipe_Account(int uid, int cookID);
 }

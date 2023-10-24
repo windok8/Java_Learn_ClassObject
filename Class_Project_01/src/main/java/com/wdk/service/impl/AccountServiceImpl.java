@@ -9,6 +9,7 @@ import com.wdk.pojo.User;
 import com.wdk.pojo.UserLevel;
 import com.wdk.service.AccountService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,6 +49,11 @@ public class AccountServiceImpl implements AccountService {
 
     public int updatePassword(int accountID, String newPassword) {
         return accountDao.updatePassword(accountID, newPassword);
+    }
+
+    @Override
+    public List<Account> getAllAccount() {
+        return accountDao.getAllAccount();
     }
 
     public void deleteAccount(int accountID) {

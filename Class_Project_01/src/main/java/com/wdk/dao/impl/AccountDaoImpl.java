@@ -2,8 +2,7 @@ package com.wdk.dao.impl;
 
 import com.wdk.dao.AccountDao;
 import com.wdk.dao.BaseDao;
-import com.wdk.pojo.Account;
-import com.wdk.pojo.UserLevel;
+import com.wdk.pojo.*;
 import com.wdk.util.RecipeSystemConnectionPool;
 
 import java.sql.*;
@@ -191,5 +190,79 @@ public class AccountDaoImpl extends BaseDao implements AccountDao {
             }
         }
         return rows;
+    }
+
+    @Override
+    public List<Account> getAllAccount() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Account> accountList = new ArrayList<>();
+        try {
+            connection = RecipeSystemConnectionPool.getConnection();
+            String sql = "SELECT \n" +
+                    "    a.id AS account_id,\n" +
+                    "    a.username AS account_username,\n" +
+                    "    a.password,\n" +
+                    "    a.userlevel,\n" +
+                    "    a.createtime,\n" +
+                    "    a.lastlogintime,\n" +
+                    "    u.username AS user_username,\n" +
+                    "    u.realname,\n" +
+                    "    u.gender,\n" +
+                    "    u.phone,\n" +
+                    "    u.email\n" +
+                    "FROM\n" +
+                    "    account a\n" +
+                    "JOIN\n" +
+                    "    user u ON a.id = u.id;";
+            preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
+            //执行CURD
+            resultSet = preparedStatement.executeQuery();// 这里不需要再传入SQL语句
+            while (resultSet.next()) {
+                Account account = new Account(resultSet.getInt("account_id"));
+                account.setUsername(resultSet.getString("account_username"));
+                account.setPassword(resultSet.getString("password"));
+                String userLevel = resultSet.getString("userlevel");
+                account.setUserLevel(UserLevel.valueOf(userLevel));
+                account.setCreateTime(resultSet.getDate("createtime"));
+                account.setLastLoginTime(resultSet.getDate("lastlogintime"));
+                User user = new User();
+                user.setUserName(resultSet.getString("user_username"));
+                user.setRealName(resultSet.getString("realname"));
+                String gender = resultSet.getString("gender");
+                user.setGender(GenderEnum.valueOf(gender));
+                user.setPhone(resultSet.getString("phone"));
+                user.setEmail(resultSet.getString("email"));
+                account.setUser(user);
+                accountList.add(account);
+            }
+            return accountList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (null != resultSet) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != preparedStatement) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != connection) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 }
