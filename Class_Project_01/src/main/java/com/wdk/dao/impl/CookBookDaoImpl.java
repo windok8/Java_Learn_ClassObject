@@ -4,14 +4,13 @@ import com.wdk.dao.CookBookDao;
 import com.wdk.pojo.CookBook;
 import com.wdk.pojo.RecipeStatus;
 import com.wdk.util.RecipeSystemConnectionPool;
+import com.wdk.util.StringAndMapConverter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author : Windok
@@ -36,10 +35,18 @@ public class CookBookDaoImpl implements CookBookDao {
             resultSet = preparedStatement.executeQuery();// 这里不需要再传入SQL语句
             while (resultSet.next()) {
                 cookBook.setTitle(resultSet.getString("title"));
-                cookBook.setDescription(resultSet.getString("description"));
+                Map<Integer, String> recipeDescription = new HashMap<>();
+                String description = resultSet.getString("description");
+                if (description != null){
+                    recipeDescription = StringAndMapConverter.parseRecipeDescription(description);
+                    cookBook.setSteps(recipeDescription.size());
+                }
+                cookBook.setDescription(recipeDescription);
                 cookBook.setLikes(resultSet.getInt("likes"));
                 cookBook.setCreateTime(resultSet.getDate("createtime"));
                 cookBook.setUpdateTime(resultSet.getDate("updatetime"));
+                String materials = resultSet.getString("materials");
+                if (materials != null) cookBook.setMaterials(StringAndMapConverter.convertStringToMap(materials));
             }
             return cookBook;
         } catch (Exception e) {
@@ -69,6 +76,7 @@ public class CookBookDaoImpl implements CookBookDao {
         }
         return null;
     }
+
 
     @Override
     public Map<Integer, RecipeStatus> getAccountAndRecipeByuID(int id) {
@@ -129,28 +137,23 @@ public class CookBookDaoImpl implements CookBookDao {
             connection = RecipeSystemConnectionPool.getConnection();
             switch (recipe_columns) {
                 case 1:
-                    sql = "update recipe set title = ? where id = ?";break;
+                    sql = "update recipe set title = ? where id = ?";
+                    break;
                 case 2:
-                    sql = "update recipe set description = ? where id = ?";break;
+                    sql = "update recipe set description = ? where id = ?";
+                    break;
                 case 3:
-                    sql = "update recipe set materials = ? where id = ?";break;
+                    sql = "update recipe set materials = ? where id = ?";
+                    break;
                 case 4:
-                    sql = "update recipe set updatetime = ? where id = ?";break;
-                case 5:
-                    sql = "update recipe set steps = ? where id = ?";break;
+                    sql = "update recipe set steps = ? where id = ?";
+                    break;
             }
             preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
-            switch (recipe_columns) {
-                case 1:
-                case 2:
-                case 3:
-                    preparedStatement.setObject(1, content);
-                    preparedStatement.setObject(2, id);
-                    break;
-                case 4:{
 
-                }
-            }
+            preparedStatement.setObject(1, content);
+            preparedStatement.setObject(2, id);
+
             rows = preparedStatement.executeUpdate();
             //  更新菜谱信息后修改 -> 更新时间
             sql = "update recipe set updatetime = ? where id = ?";
@@ -180,6 +183,149 @@ public class CookBookDaoImpl implements CookBookDao {
             }
         }
         return rows;
+    }
+
+    @Override
+    public List<CookBook> getRecipe() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<CookBook> recipeList = new ArrayList<>();
+        try {
+            connection = RecipeSystemConnectionPool.getConnection();
+            String sql = "SELECT \n" +
+                    "    recipe.id AS recipe_id,\n" +
+                    "    recipe.title,\n" +
+                    "    recipe.description,\n" +
+                    "    recipe.likes,\n" +
+                    "    recipe.createtime,\n" +
+                    "    recipe.updatetime,\n" +
+                    "    recipe.materials,\n" +
+                    "    recipe.steps,\n" +
+                    "    user.username,\n" +
+                    "    user.email,\n" +
+                    "\t\taccount_recipe.account_id,\n" +
+                    "    account_recipe.status,\n" +
+                    "    COUNT(recipe_comments.comment_id) AS comment_count\n" +
+                    "FROM \n" +
+                    "    recipe\n" +
+                    "JOIN \n" +
+                    "    account_recipe ON recipe.id = account_recipe.recipe_id\n" +
+                    "JOIN \n" +
+                    "    user ON account_recipe.account_id = user.id\n" +
+                    "LEFT JOIN \n" +
+                    "    recipe_comments ON recipe.id = recipe_comments.recipe_id\n" +
+                    "WHERE\n" +
+                    "\t\t`status` = 'APPROVED'\n" +
+                    "GROUP BY \n" +
+                    "    recipe.id,\n" +
+                    "    user.username,\n" +
+                    "    user.email,\n" +
+                    "    account_recipe.status,\n" +
+                    "\t\taccount_recipe.account_id";
+            preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
+            //执行CURD
+            resultSet = preparedStatement.executeQuery();// 这里不需要再传入SQL语句
+            while (resultSet.next()) {
+                CookBook cookBook = new CookBook(resultSet.getInt("recipe_id"));
+                cookBook.setTitle(resultSet.getString("title"));
+                Map<Integer, String> recipeDescription = new HashMap<>();
+                String description = resultSet.getString("description");
+                if (description != null){
+                    recipeDescription = StringAndMapConverter.parseRecipeDescription(description);
+                    cookBook.setSteps(recipeDescription.size());
+                }
+                cookBook.setDescription(recipeDescription);
+                cookBook.setLikes(resultSet.getInt("likes"));
+                cookBook.setCreateTime(resultSet.getDate("createtime"));
+                cookBook.setUpdateTime(resultSet.getDate("updatetime"));
+                cookBook.setSteps(resultSet.getInt("steps"));
+                cookBook.setAuthorName(resultSet.getString("username"));
+                cookBook.setCommentCount(resultSet.getInt("comment_count"));
+                cookBook.setUserEmail(resultSet.getString("email"));
+                cookBook.setUserID(resultSet.getInt("account_id"));
+                String materials = resultSet.getString("materials");
+                if (materials != null) cookBook.setMaterials(StringAndMapConverter.convertStringToMap(materials));
+                recipeList.add(cookBook);
+            }
+            return recipeList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (null != resultSet) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != preparedStatement) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != connection) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<CookBook> getRecipe_Admin() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<CookBook> recipeList = new ArrayList<>();
+        try {
+            connection = RecipeSystemConnectionPool.getConnection();
+            String sql = "SELECT recipe.id,title,createtime,updatetime,account_id,`status`,realname FROM recipe JOIN account_recipe ON recipe.id = account_recipe.recipe_id JOIN `user` ON `user`.id = account_recipe.account_id";
+            preparedStatement = connection.prepareStatement(sql);//这里已经传入SQL语句
+            //执行CURD
+            resultSet = preparedStatement.executeQuery();// 这里不需要再传入SQL语句
+            while (resultSet.next()) {
+                CookBook cookBook = new CookBook(resultSet.getInt("id"));
+                cookBook.setTitle(resultSet.getString("title"));
+                cookBook.setCreateTime(resultSet.getDate("createtime"));
+                cookBook.setUpdateTime(resultSet.getDate("updatetime"));
+                cookBook.setAuthorRealName(resultSet.getString("realname"));
+                cookBook.setUserID(resultSet.getInt("account_id"));
+                cookBook.setStatus(RecipeStatus.valueOf(resultSet.getString("status")));
+                recipeList.add(cookBook);
+            }
+            return recipeList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (null != resultSet) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != preparedStatement) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != connection) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 
     @Override

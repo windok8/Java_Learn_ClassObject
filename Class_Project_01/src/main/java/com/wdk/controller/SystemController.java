@@ -1,6 +1,7 @@
 package com.wdk.controller;
 
 import com.wdk.pojo.Account;
+import com.wdk.pojo.UserLevel;
 import com.wdk.util.CheckInput;
 import com.wdk.util.MenuModule;
 
@@ -100,63 +101,57 @@ public class SystemController {
     }
 
     public void frontPage(Account account) throws InterruptedException {
+        UserLevel level = account.getUserLevel();
         while (true) {
             menuModule.waitToMenu("首页");
             menuModule.front_Page_Menu(account.getUserLevel());
             int i = checkInput.check_Front_Page_Input(account.getUserLevel());
-            switch (i) {
-                //  查看美食菜谱
-                case 1: {
-                    cookBookController.showAllCookBook();
-                    System.out.println("查看美食菜谱");
-                }
-                break;
-                //  查看个人信息
-                case 2: {
+            switch (level){
+                case GUEST:{
+                    System.out.println("GUEST");
+                    switch (i){
+                        case 1:cookBookController.showAllCookBook();break;
+                        case 0:startSystem();
+                    }
+                };break;
+                case USER:{
+                    System.out.println("USER");
+                    switch (i){
+                        case 1:cookBookController.showAllCookBook();break;
+                        case 2:if (userController.userInfo(account.getId()) == 1) return;break;
+                        case 0:startSystem();
+                    }
+                }break;
+                case AUTHOR:{
+                    System.out.println("AUTHOR");
+                    switch (i){
+                        case 1:cookBookController.showAllCookBook();break;
+                        case 2:if (userController.userInfo(account.getId()) == 1) return;break;
+                        case 3:{account = showMyCookBook(account);break;}
+                        case 4:cookBookController.writeCookBook(account.getId());break;
+                        case 0:startSystem();
+                    }
+                }break;
+                case ADMIN:
+                case SUPER_ADMIN:{
+                    System.out.println("ADMIN|SUPER_ADMIN");
+                    switch (i){
+                        case 1:cookBookController.showAllCookBook();break;
+                        case 2:if (userController.userInfo(account.getId()) == 1) return;break;
+                        case 3:cookBookController.showAllCookBook_Admin();break;
+                        case 4:accountController.showAllAccount();break;
+                        case 0:startSystem();
+                    }
+                }break;
 
-                    if (userController.userInfo(account.getId()) == 1) return;
-                    System.out.println("查看个人信息【Over】");
-                }
-                break;
-                //  查看我的菜谱
-                case 3: {
-                    showMyCookBook(account);
-
-                    System.out.println("查看我的菜谱【Over】");
-                    frontPage(account);
-                }
-                break;
-                //  发布菜谱
-                case 4: {
-                    cookBookController.writeCookBook(account.getId());
-                    System.out.println("发布菜谱");
-                }
-                break;
-                //  ADMIN - - 查看所有菜谱
-                case 5: {
-                    cookBookController.showAllCookBook_Admin();
-                    System.out.println("查看所有菜谱信息");
-                }
-                break;
-                //  查看所有用户
-                case 6: {
-                    accountController.showAllAccount();
-                    System.out.println("查看所有用户");
-                }
-                break;
-                //  登出
-                case 0: {
-                    System.out.println("登出");
-                    startSystem();
-                }
-                break;
             }
         }
     }
 
-    private void showMyCookBook(Account account) throws InterruptedException {
-        account = cookBookController.showMyCookBook(account);
-        if (account == null) return;
+    private Account showMyCookBook(Account account) throws InterruptedException {
+        Account accountIsCook = cookBookController.showMyCookBook(account);
+        if (accountIsCook == null) return account;
+        account = accountIsCook;
         while (true) {
             menuModule.waitToMenu("个人菜谱控制台");
             menuModule.recipePersonal_Menu();
@@ -179,9 +174,8 @@ public class SystemController {
                 }
                 break;
                 case 0: {
-                    frontPage(account);
+                    return account;
                 }
-                break;
             }
         }
 

@@ -49,7 +49,7 @@ public class Account implements Serializable {
     private List<Integer> cookBookIDs;
     private User user;
     private List<CookBook> cookBooks;
-    private Boolean isFindCookBook = false;
+    private Boolean isFindCookBook = true;
 
 
     public Account() {

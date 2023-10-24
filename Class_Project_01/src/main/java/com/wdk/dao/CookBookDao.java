@@ -3,6 +3,7 @@ package com.wdk.dao;
 import com.wdk.pojo.CookBook;
 import com.wdk.pojo.RecipeStatus;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,4 +26,8 @@ public interface CookBookDao {
     boolean deleteRecipe(int id);
 
     int modifyContent(int id, String content, int recipe_columns);
+
+    List<CookBook> getRecipe();
+
+    List<CookBook> getRecipe_Admin();
 }
