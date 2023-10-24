@@ -3,6 +3,7 @@ package com.wdk.service;
 import com.wdk.pojo.CookBook;
 import com.wdk.pojo.RecipeStatus;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,4 +21,11 @@ public interface CookBookService {
 
     int modifyDescription(int id, String title);
     int modifyTitle(int id, String title);
+
+    int updateMaterials(int id, List<String> mainIngredients, List<String> auxiliaryIngredients);
+
+    List<CookBook> getRecipe();
+
+    List<CookBook> getRecipe_Admin();
+
 }

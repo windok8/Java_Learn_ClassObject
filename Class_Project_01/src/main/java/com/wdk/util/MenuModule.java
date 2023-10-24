@@ -127,6 +127,27 @@ public class MenuModule {
         draw_Line(2);
     }
 
+    public void reviseRecipeMaterials_Menu(){
+        draw_Line(2);
+        System.out.println("\t\t\t\t【菜谱材料修改】");
+        System.out.println("\t\t\t\t【1】修改主料");
+        System.out.println("\t\t\t\t【2】修改辅料");
+        System.out.println("\t\t\t\t【0】返回上一级");
+        draw_Line(2);
+    }
+
+    public void reviseIngredients_Menu(String name){
+        draw_Line(2);
+        System.out.println("\t\t\t\t【"+name+" - 材料修改】");
+        System.out.println("\t\t\t\t【1】修改"+name+"信息");
+        System.out.println("\t\t\t\t【2】增加"+name);
+        System.out.println("\t\t\t\t【3】删除"+name);
+        System.out.println("\t\t\t\t【0】返回上一级");
+        draw_Line(2);
+    }
+
+
+
 
 
 }

@@ -13,6 +13,7 @@ import java.util.Scanner;
  */
 public class CheckInput {
 
+    public static final String ERROR_MG = "【\u26A0】";
     public static final String ERROR_INPUT = "【\u26A0】输入错误，请重新输入！";
     public static final String IN_ENTER = "请输入您的选择：";
     private static String RE_ENTER = "请重新输入：";
@@ -103,6 +104,23 @@ public class CheckInput {
             }
         }
 
+    }
+    public int check_Value_Input_int(String input, int maxValue) {
+        while (true) {
+            try {
+                if (input.length() == 0) {
+                    throw new SystemException(ERROR_INPUT);
+                }
+                if (Integer.parseInt(input) < 0 || Integer.parseInt(input) > maxValue) {
+                    throw new SystemException(ERROR_INPUT);
+                }
+                return Integer.parseInt(input);
+            } catch (SystemException e) {
+                System.out.println(e.getMessage());
+                System.out.print(RE_ENTER);
+                input = new Scanner(System.in).nextLine();
+            }
+        }
     }
 
     /**

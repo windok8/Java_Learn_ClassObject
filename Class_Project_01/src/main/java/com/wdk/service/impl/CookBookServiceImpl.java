@@ -5,7 +5,10 @@ import com.wdk.dao.impl.CookBookDaoImpl;
 import com.wdk.pojo.CookBook;
 import com.wdk.pojo.RecipeStatus;
 import com.wdk.service.CookBookService;
+import org.ehcache.impl.internal.store.offheap.OffHeapStoreUtils;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +53,26 @@ public class CookBookServiceImpl implements CookBookService {
         cookBookDao.modifyRecipeStatus(id);
         if (cookBookDao.modifyContent(id, title, 1) == 1) return 1;
         return 0;
+    }
+
+    @Override
+    public int updateMaterials(int id, List<String> mainIngredients, List<String> auxiliaryIngredients) {
+        cookBookDao.modifyRecipeStatus(id);
+        Map<String,List<String>> materials = new HashMap<>();
+        materials.put("主料",mainIngredients);
+        materials.put("辅料",auxiliaryIngredients);
+        if (cookBookDao.modifyContent(id,materials.toString(),3) == 1) return 1;
+        return 0;
+    }
+
+    @Override
+    public List<CookBook> getRecipe() {
+        return cookBookDao.getRecipe();
+    }
+
+    @Override
+    public List<CookBook> getRecipe_Admin() {
+        return cookBookDao.getRecipe_Admin();
     }
 
 
